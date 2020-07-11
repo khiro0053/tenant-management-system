@@ -53,6 +53,8 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "therubyracer"
+  gem "rspec_junit_formatter"
 end
 
 group :development do
