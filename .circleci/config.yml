@@ -1,4 +1,5 @@
 version: 2.1
+
 executors:
   default_container:
     docker:
@@ -41,22 +42,23 @@ jobs:
           key: v1-tenant-management-system-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
       - run:
           name: setup bundler
-          #デフォルトでは２系のbunderが使えないため入れ替えている
           command: |
             sudo gem uninstall bundler
             sudo rm /usr/local/bin/bundle
             sudo rm /usr/local/bin/bundler
             sudo gem install bundler -v 2.0.1
       - run:
-        name: Bundle Install Dependencies
-        command: |
-          bundle install
+          name: Bundle Install Dependencies
+          command: |
+            bundle install
       - save_cache:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
   rubocop:
     executor:
       name: default_container
@@ -67,9 +69,9 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - install_bundler
       - run:
-        name: Execute rubocop
-        command: bundle exec rubocop
-
+          name: Execute rubocop
+          command: |
+            bundle exec rubocop
   rspec:
     executor:
       name: default_container
@@ -78,19 +80,19 @@ jobs:
           key: v1-tenant-management-system-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - install_bundler
+
       - run:
-        name: Watting stand up database
-        command: |
-          dockerize -wait \
-          tcp://127.0.0.1:3306 -timeout 120s
+          name: Watting stand up database
+          command: |
+            dockerize -wait \
+            tcp://127.0.0.1:3306 -timeout 120s
       # Database setup
       - run: mv ./config/database.yml.ci ./config/database.yml
       - install_bundler
       - run:
-        name: Testing DB migration and seed
-        command: |
-          bundle exec rails db:create db:migrate db:seed db:drop
+          name: Testing DB migration and seed
+          command: |
+            bundle exec rails db:create db:migrate db:seed db:drop
       # mkdir directory for upload test results
       - run: mkdir /tmp/test-results
       - run: mkdir -p ~/rspec
@@ -106,6 +108,7 @@ jobs:
                               --format RspecJunitFormatter \
                               --out ~/rspec/rspec.xml \
                               $TEST_FILES
+
       # collect reports
       - store_test_results:
           path: ~/rspec
