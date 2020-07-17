@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+  has_many :user_tenants
+  has_many :tenants, through: :user_tenants
 end
