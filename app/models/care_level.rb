@@ -1,0 +1,2 @@
+class CareLevel < ApplicationRecord
+end
