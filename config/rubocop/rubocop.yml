@@ -51,6 +51,12 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceInsideBlockBraces:
   SpaceBeforeBlockParameters: false
 
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
 #################### Lint ##################################
 
 # spec 内では
@@ -99,6 +105,21 @@ Lint/UnusedMethodArgument:
 # ようにすると誤検知がほぼ無くなる？
 Lint/Void:
   CheckForMethodsWithNoSideEffects: true
+
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: false
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+
 
 #################### Metrics ###############################
 
@@ -407,5 +428,30 @@ Style/WordArray:
 #   end
 # に修正されるのが嫌。
 # 中身を入れ替えて否定外しても良いんだけど、どちらが例外的な処理なのかが分かりづらくなる。
+
 Style/ZeroLengthPredicate:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: false
+
+Style/RedundantRegexpEscape:
+  Enabled: false
+
+Style/SlicingWithRange :
   Enabled: false

@@ -1,3 +1,3 @@
 class CareLevel < ApplicationRecord
-  has_many :residents
+  has_many :residents, dependent: :nullify
 end
