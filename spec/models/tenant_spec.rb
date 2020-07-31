@@ -3,6 +3,7 @@
 # Table name: tenants
 #
 #  id                         :bigint           not null, primary key
+#  capacity                   :integer
 #  name                       :string(255)
 #  target_number_of_residents :integer
 #  created_at                 :datetime         not null
