@@ -18,6 +18,8 @@
 #  fk_rails_...  (area_id => areas.id)
 #
 class Tenant < ApplicationRecord
+  validates :name, presence: true, length: { in: 1..50 }
+
   has_many :user_tenants, dependent: :destroy
   has_many :users, through: :user_tenants
   has_many :rooms, dependent: :destroy
