@@ -17,11 +17,13 @@
 # Foreign Keys
 #
 #  fk_rails_...  (area_id => areas.id)
-#
+
 FactoryBot.define do
   factory :tenant do
-    name { "MyString" }
-    target_number_of_residents { 1 }
-    area { "MyString" }
+    capacity {Random.new.rand(18..300)}
+    name { Faker::Company.name}
+    number_of_residents = Random.new.rand(18..300)
+    target_number_of_residents { 18 }
+    area
   end
 end

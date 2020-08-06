@@ -9,6 +9,6 @@
 #
 FactoryBot.define do
   factory :area do
-    name { "MyString" }
+    name { Faker::Address.state }
   end
 end
