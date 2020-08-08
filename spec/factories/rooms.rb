@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :room do
-    name { "MyString" }
-    seating_capacity { "" }
-    vacancy_flag { "MyString" }
+    name { Random.new.rand(1..300).to_s + "号室" }
+    seating_capacity { Random.new.rand(1..2) }
+    tenant
   end
 end

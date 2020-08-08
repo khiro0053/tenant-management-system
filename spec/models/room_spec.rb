@@ -20,5 +20,35 @@
 require "rails_helper"
 
 RSpec.describe Room, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "正常系" do
+    context "名前と部屋人数が設定されている場合" do
+      let(:room) { build(:room) }
+      it "部屋が作成できる" do
+        expect(room).to be_valid
+      end
+    end
+  end
+  describe "エラーチェック" do
+    context "名前がない場合" do
+      let(:room) { build(:room, name: nil) }
+      it "作成できない" do
+        expect(room).not_to be_valid
+        expect(room.errors.messages[:name][0]).to include "can't be blank"
+      end
+    end
+    context "名前が21文字以上の場合" do
+      let(:room) { build(:room, name: "x" * 21) }
+      it "作成できない" do
+          expect(room).not_to be_valid
+          expect(room.errors.messages[:name][0]).to include "is too long (maximum is 20 characters)"
+      end
+    end
+    context "部屋人数が設定せれていない場合" do
+      let(:room) { build(:room, seating_capacity: nil) }
+      it "作成できない" do
+        expect(room).not_to be_valid
+        expect(room.errors.messages[:seating_capacity]).to include "can't be blank"
+      end
+    end
+  end
 end

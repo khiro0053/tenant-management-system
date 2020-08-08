@@ -18,6 +18,8 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class Room < ApplicationRecord
+  validates :name, presence: true, uniqueness: true, length: {maximum: 20}
+  validates :seating_capacity, presence: true
   belongs_to :tenant
   has_many :room_assingments, dependent: :nullify
   has_many :residents, through: :room_assingments
