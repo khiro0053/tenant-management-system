@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_065339) do
+ActiveRecord::Schema.define(version: 2020_08_09_142738) do
 
   create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -18,21 +18,14 @@ ActiveRecord::Schema.define(version: 2020_07_31_065339) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "care_levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "care_level"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "residents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "is_hospitalized"
+    t.boolean "is_hospitalized", default: false, null: false
     t.bigint "tenant_id"
-    t.bigint "care_level_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["care_level_id"], name: "index_residents_on_care_level_id"
+    t.string "care_level", default: "自立"
     t.index ["tenant_id"], name: "index_residents_on_tenant_id"
   end
 
@@ -99,7 +92,6 @@ ActiveRecord::Schema.define(version: 2020_07_31_065339) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "residents", "care_levels"
   add_foreign_key "residents", "tenants"
   add_foreign_key "room_assingments", "residents"
   add_foreign_key "room_assingments", "rooms"

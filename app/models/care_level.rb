@@ -8,5 +8,6 @@
 #  updated_at :datetime         not null
 #
 class CareLevel < ApplicationRecord
+  validates :care_level,  uniqueness: true
   has_many :residents, dependent: :nullify
 end
