@@ -21,10 +21,9 @@
 #
 FactoryBot.define do
   factory :resident do
-    first_name  { Faker::Name.first_name  }
-    last_name  { Faker::Name.last_name }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
     is_hospitalized { false }
-    care_levels =["なし","要支援１","要支援２","要介護１","要介護２","要介護３","要介護４","要介護５"]
     care_level { "自立" }
     tenant
 

@@ -30,6 +30,7 @@ RSpec.describe RoomAssingment, type: :model do
         expect(room_assingment).to be_valid
       end
     end
+
     context "契約開始日・契約終了日が入力されている場合" do
       let(:room_assingment) { build(:room_assingment, date_to: "2020-07-19") }
       it "登録ができる" do
@@ -37,6 +38,7 @@ RSpec.describe RoomAssingment, type: :model do
       end
     end
   end
+
   describe "エラーチェック" do
     context "契約開始日より前に契約終了日が入力されている場合" do
       let(:room_assingment) { build(:room_assingment, date_to: "1900-01-01") }

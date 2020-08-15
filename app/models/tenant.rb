@@ -23,7 +23,6 @@ class Tenant < ApplicationRecord
   validates :capacity, presence: true
   validate :target_number_of_residents_cannot_be_greater_than_capacity
 
-
   def target_number_of_residents_cannot_be_greater_than_capacity
     self.target_number_of_residents ||= 0
     self.capacity ||= 0

@@ -22,8 +22,8 @@
 #
 FactoryBot.define do
   factory :room_assingment do
-    date_from  { "2020-07-19" }
-    date_to  { nil }
+    date_from { "2020-07-19" }
+    date_to { nil }
     resident
     room
   end

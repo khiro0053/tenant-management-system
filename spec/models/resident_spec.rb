@@ -30,6 +30,7 @@ RSpec.describe Resident, type: :model do
       end
     end
   end
+
   describe "エラーチェック" do
     context "名前が設定されていない場合" do
       let(:resident) { build(:resident, first_name: nil) }
@@ -38,22 +39,25 @@ RSpec.describe Resident, type: :model do
         expect(resident.errors.messages[:first_name]).to include "can't be blank"
       end
     end
+
     context "名前が長すぎる場合" do
-      let(:resident) { build(:resident, first_name: "x"*21) }
+      let(:resident) { build(:resident, first_name: "x" * 21) }
       it "登録ができない" do
         expect(resident).not_to be_valid
         expect(resident.errors.messages[:first_name]).to include "is too long (maximum is 20 characters)"
       end
     end
+
     context "名字が設定されていない場合" do
-      let(:resident) { build(:resident, last_name:   nil) }
+      let(:resident) { build(:resident, last_name: nil) }
       it "登録ができない" do
         expect(resident).not_to be_valid
         expect(resident.errors.messages[:last_name]).to include "can't be blank"
       end
     end
+
     context "名字が長すぎる場合" do
-      let(:resident) { build(:resident, last_name: "x"*21) }
+      let(:resident) { build(:resident, last_name: "x" * 21) }
       it "登録ができない" do
         expect(resident).not_to be_valid
         expect(resident.errors.messages[:last_name]).to include "is too long (maximum is 20 characters)"

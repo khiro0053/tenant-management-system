@@ -20,9 +20,8 @@
 
 FactoryBot.define do
   factory :tenant do
-    capacity {Random.new.rand(18..300)}
-    name { Faker::Company.name}
-    number_of_residents = Random.new.rand(18..300)
+    capacity { Random.new.rand(18..300) }
+    name { Faker::Company.name }
     target_number_of_residents { 18 }
     area
   end

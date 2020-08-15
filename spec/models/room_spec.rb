@@ -11,6 +11,7 @@
 #
 # Indexes
 #
+#  index_rooms_on_name       (name) UNIQUE
 #  index_rooms_on_tenant_id  (tenant_id)
 #
 # Foreign Keys
@@ -28,6 +29,7 @@ RSpec.describe Room, type: :model do
       end
     end
   end
+
   describe "エラーチェック" do
     context "名前がない場合" do
       let(:room) { build(:room, name: nil) }
@@ -36,13 +38,15 @@ RSpec.describe Room, type: :model do
         expect(room.errors.messages[:name][0]).to include "can't be blank"
       end
     end
+
     context "名前が21文字以上の場合" do
       let(:room) { build(:room, name: "x" * 21) }
       it "作成できない" do
-          expect(room).not_to be_valid
-          expect(room.errors.messages[:name][0]).to include "is too long (maximum is 20 characters)"
+        expect(room).not_to be_valid
+        expect(room.errors.messages[:name][0]).to include "is too long (maximum is 20 characters)"
       end
     end
+
     context "部屋人数が設定せれていない場合" do
       let(:room) { build(:room, seating_capacity: nil) }
       it "作成できない" do

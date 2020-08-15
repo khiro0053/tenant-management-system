@@ -64,5 +64,4 @@ RSpec.describe Tenant, type: :model do
       end
     end
   end
-
 end

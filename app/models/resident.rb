@@ -22,7 +22,16 @@
 class Resident < ApplicationRecord
   validates :first_name, presence: true, length: { in: 1..20 }
   validates :last_name, presence: true, length: { in: 1..20 }
-  enum care_level: { jiritu:"自立", youshien1:"要支援１", youshien2:"要支援２", youkaigo1:"要介護１", youkaigo2:"要介護２", youkaigo3:"要介護3", youkaigo4:"要介護4", youkaigo5:"要介護5" }
+  enum care_level: {
+    jiritu: "自立",
+    youshien1: "要支援１",
+    youshien2: "要支援２",
+    youkaigo1: "要介護１",
+    youkaigo2: "要介護２",
+    youkaigo3: "要介護3",
+    youkaigo4: "要介護4",
+    youkaigo5: "要介護5",
+  }
 
   belongs_to :tenant
   has_many :room_assingments, dependent: :destroy
