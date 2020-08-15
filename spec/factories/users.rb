@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -30,21 +28,11 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_uid_and_provider      (uid,provider) UNIQUE
 #
-class User < ApplicationRecord
-  extend Devise::Models
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-  include DeviseTokenAuth::Concerns::User
-
-  validates :name, presence: true, length: { in: 2..50 }
-  # emailのフォーマットについてはdevice-token-auth側で/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/iと設定されている
-  validates :email, presence: true, uniqueness: true
-  # 半角英小文字大文字数字をそれぞれ1種類以上含む半角英数字記号
-  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]+\z/.freeze
-  validates :password, presence: true, length: { in: 8..32 }, format: { with: VALID_PASSWORD_REGEX }, if: :password_required?
-
-  has_many :user_tenants, dependent: :destroy
-  has_many :tenants, through: :user_tenants
+FactoryBot.define do
+  factory :user do
+    name { Faker::Lorem.characters(number: Random.new.rand(2..50)) }
+    sequence(:email) {|n| "#{n}_#{Faker::Internet.email}" }
+    # Fakerで生成したパスワードでは半角大文字、小文字、数字それぞれ一文字ずつの条件を満たせないことがあるため先頭に”Aa1”をつけた
+    password { "Aa1" + Faker::Internet.password(min_length: 5, max_length: 29, mix_case: true, special_characters: true) }
+  end
 end

@@ -57,6 +57,13 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: false
 
+# * 警告 120文字
+# * 禁止 160文字
+# のイメージ
+Layout/LineLength:
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
 #################### Lint ##################################
 
 # spec 内では
@@ -147,13 +154,7 @@ Metrics/BlockLength:
 Metrics/CyclomaticComplexity:
   Max: 10
 
-# * 警告 120文字
-# * 禁止 160文字
-# のイメージ
-Metrics/LineLength:
-  Max: 160
-  Exclude:
-    - "db/migrate/*.rb"
+
 
 # 20 行超えるのは migration ファイル以外滅多に無い
 Metrics/MethodLength:
