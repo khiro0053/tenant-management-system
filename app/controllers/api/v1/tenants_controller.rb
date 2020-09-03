@@ -1,5 +1,5 @@
-class Api::V1::TenantsController < Api::V1::ApiControllers
-  before_action :set_tenant, only: [:show :update, :destroy]
+class Api::V1::TenantsController < Api::V1::ApiController
+  before_action :set_tenant, only: [:show, :update, :destroy]
   def index
     tenants = Tenant.all
     render json: tenants
@@ -20,7 +20,7 @@ class Api::V1::TenantsController < Api::V1::ApiControllers
   end
 
   def destroy
-    @tenant.destroy!(tenant_params)
+    @tenant.destroy!
     render json: @tenant
   end
 
@@ -30,6 +30,6 @@ class Api::V1::TenantsController < Api::V1::ApiControllers
   end
 
   def tenant_params
-    params.require(:tenant).permit(:name, :target_number_of_residents)
+    params.require(:tenant).permit(:name, :target_number_of_residents, :capacity, :area_id)
   end
 end
