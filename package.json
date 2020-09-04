@@ -2,9 +2,9 @@
   "name": "tenant-management-system",
   "private": true,
   "dependencies": {
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
