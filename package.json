@@ -2,6 +2,7 @@
   "name": "tenant-management-system",
   "private": true,
   "dependencies": {
+    "@rails/webpacker": "5.2.1",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.12"
