@@ -1,4 +1,3 @@
-
 <template>
   <div id="tenants-container">
     <ul>
