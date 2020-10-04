@@ -56,6 +56,7 @@ group :development, :test do
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "therubyracer"
+  gem "rack-cors"
 end
 
 group :development do
