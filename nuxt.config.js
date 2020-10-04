@@ -3,6 +3,15 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   srcDir: 'app/',
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  server: {
+    port: 8000, // デフォルト: 3000
+    host: '127.0.0.1', // デフォルト: localhost,
+    timing: false
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
+
   head: {
     titleTemplate: '%s - tenant-management-system',
     title: 'tenant-management-system',
@@ -32,7 +41,13 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [],
+  modules: [
+    '@nuxtjs/axios'
+  ],
+
+  axios: {
+    baseURL: 'http://localhost:3000/', // Used as fallback if no runtime config is provided
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
