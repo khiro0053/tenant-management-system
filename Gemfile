@@ -50,13 +50,13 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-doc"
   gem "pry-rails"
+  gem "rack-cors"
   gem "rails-erd"
   gem "rspec-rails"
   gem "rspec_junit_formatter"
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "therubyracer"
-  gem "rack-cors"
 end
 
 group :development do
