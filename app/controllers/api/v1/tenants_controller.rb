@@ -1,5 +1,7 @@
 class Api::V1::TenantsController < Api::V1::ApiController
   before_action :set_tenant, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
+
   def index
     tenants = Tenant.all
     render json: tenants
