@@ -9,14 +9,17 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  area_id                    :bigint
+#  company_id                 :bigint
 #
 # Indexes
 #
-#  index_tenants_on_area_id  (area_id)
+#  index_tenants_on_area_id     (area_id)
+#  index_tenants_on_company_id  (company_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (area_id => areas.id)
+#  fk_rails_...  (company_id => companies.id)
 #
 class Tenant < ApplicationRecord
   validates :name, presence: true, length: { in: 1..50 }
@@ -31,9 +34,9 @@ class Tenant < ApplicationRecord
     end
   end
 
-  has_many :user_tenants, dependent: :destroy
-  has_many :users, through: :user_tenants
+
   has_many :rooms, dependent: :destroy
   has_many :residents, dependent: :restrict_with_exception
+  belongs_to :company
   belongs_to :area
 end

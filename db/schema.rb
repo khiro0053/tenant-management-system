@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
     t.index ["name"], name: "index_areas_on_name", unique: true
   end
 
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "residents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -54,20 +60,13 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
   create_table "tenants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "target_number_of_residents"
+    t.bigint "company_id"
     t.bigint "area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "capacity"
     t.index ["area_id"], name: "index_tenants_on_area_id"
-  end
-
-  create_table "user_tenants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "tenant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_user_tenants_on_tenant_id"
-    t.index ["user_id"], name: "index_user_tenants_on_user_id"
+    t.index ["company_id"], name: "index_tenants_on_company_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -85,9 +84,11 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
     t.string "name"
     t.string "email"
     t.string "password"
+    t.bigint "company_id"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -99,6 +100,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
   add_foreign_key "room_assingments", "rooms"
   add_foreign_key "rooms", "tenants"
   add_foreign_key "tenants", "areas"
-  add_foreign_key "user_tenants", "tenants"
-  add_foreign_key "user_tenants", "users"
+  add_foreign_key "tenants", "companies"
+  add_foreign_key "users", "companies"
 end
