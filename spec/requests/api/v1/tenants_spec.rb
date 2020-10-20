@@ -2,25 +2,31 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Tenants", type: :request do
   describe "GET /api/v1/tenants" do
-    subject { get(api_v1_tenants_path) }
+    subject { get(api_v1_tenants_path, headers: headers) }
 
-    before { create_list(:tenant, 3) }
+    let(:current_user) { create(:user) }
+    let(:headers) {current_user.create_new_auth_token}
+    let(:tenant1) { create(:tenant, company_id: current_user.company_id) }
+    let(:tenant2) { create(:tenant, company_id: current_user.company_id) }
 
     it "施設一覧が取得できる" do
       subject
       res = JSON.parse(response.body)
-      expect(res.length).to eq 3
+      expect(res.length).to eq 2
       expect(res[0].keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
       expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET /api/v1/tenants/:id" do
-    subject { get(api_v1_tenant_path(tenant_id)) }
+    subject { get(api_v1_tenant_path(tenant_id), headers: headers) }
 
     context "指定したidの施設が存在する場合" do
-      let(:tenant) { create(:tenant) }
+      let(:current_user) { create(:user) }
+      let(:headers) {current_user.create_new_auth_token}
+      let(:tenant) { create(:tenant, company_id: current_user.company_id) }
       let(:tenant_id) { tenant.id }
+
       it "指定した施設が取得できる" do
         subject
         res = JSON.parse(response.body)
@@ -33,14 +39,14 @@ RSpec.describe "Api::V1::Tenants", type: :request do
   end
 
   describe "POST /api/v1/tenants" do
-    subject { post(api_v1_tenants_path, params: params) }
-
-    let(:params) { { tenant: create(:tenant).attributes } }
+    subject { post(api_v1_tenants_path, params: params, headers: headers) }
+    let(:area) { create(:area) }
     let(:current_user) { create(:user) }
-    before { allow_any_instance_of(Api::V1::ApiController).to receive(:current_user).and_return(current_user) }
+    let(:headers) {current_user.create_new_auth_token}
+    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: area.id) } }
 
     it "current_userに紐付いた施設を作成できる" do
-      expect { subject }.to change { current_user.tenants.count }.by(1)
+      expect { subject }.to change { current_user.company.tenants.count }.by(1)
       res = JSON.parse(response.body)
       expect(res.keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
       expect(response).to have_http_status(:ok)
@@ -48,30 +54,28 @@ RSpec.describe "Api::V1::Tenants", type: :request do
   end
 
   describe "PARCH/api/v1/tenants" do
-    subject { patch(api_v1_tenant_path(tenant_id), params: params) }
-
-    let(:params) { { tenant: create(:tenant).attributes } }
-    let(:tenant) { create(:tenant) }
-    let(:tenant_id) { tenant.id }
+    subject { patch(api_v1_tenant_path(tenant_id), params: params, headers: headers) }
     let(:current_user) { create(:user) }
-
-    before { allow_any_instance_of(Api::V1::ApiController).to receive(:current_user).and_return(current_user) }
+    let(:tenant) { create(:tenant, company_id: current_user.company_id ) }
+    let(:tenant_id) { tenant.id }
+    let(:headers) {current_user.create_new_auth_token}
+    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: tenant.area_id) } }
 
     context "指定したidの施設が存在する場合" do
       it "施設情報の更新ができる" do
-        expect { subject }.to change { tenant.reload.name }.from(tenant.name).to(params[:tenant]["name"])
+        expect { subject }.to change { tenant.reload.name }.from(tenant.name).to(params[:tenant][:name])
         expect(response).to have_http_status(:ok)
       end
     end
   end
 
   describe "DELETE/api/v1/tenants" do
-    subject { delete(api_v1_tenant_path(tenant_id)) }
+    subject { delete(api_v1_tenant_path(tenant_id), headers: headers) }
 
-    let!(:tenant) { create(:tenant) }
+    let!(:tenant) { create(:tenant, company_id: current_user.company_id) }
     let(:current_user) { create(:user) }
+    let(:headers) {current_user.create_new_auth_token}
 
-    before { allow_any_instance_of(Api::V1::ApiController).to receive(:current_user).and_return(current_user) }
 
     context "指定したidの施設が存在する場合" do
       let(:tenant_id) { tenant.id }

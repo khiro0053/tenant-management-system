@@ -1,9 +1,9 @@
 class Api::V1::TenantsController < Api::V1::ApiController
-  before_action :set_tenant, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
+  before_action :set_tenant, only: [:show, :update, :destroy]
 
   def index
-    tenants = Tenant.all
+    tenants = current_user.company.tenants
     render json: tenants
   end
 
@@ -12,7 +12,7 @@ class Api::V1::TenantsController < Api::V1::ApiController
   end
 
   def create
-    tenant = current_user.tenants.create!(tenant_params)
+    tenant = current_user.company.tenants.create!(tenant_params)
     render json: tenant
   end
 
@@ -29,7 +29,7 @@ class Api::V1::TenantsController < Api::V1::ApiController
   private
 
     def set_tenant
-      @tenant = Tenant.find(params[:id])
+      @tenant = current_user.company.tenants.find(params[:id])
     end
 
     def tenant_params
