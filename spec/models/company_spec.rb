@@ -7,7 +7,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Company, type: :model do
   describe "正常系" do
@@ -17,6 +17,7 @@ RSpec.describe Company, type: :model do
         expect(company).to be_valid
       end
     end
+
     context "名前が３１文字以上の場合" do
       let(:company) { build(:company, name: "x" * 31) }
       it "登録できない" do

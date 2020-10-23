@@ -5,7 +5,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
     subject { get(api_v1_tenants_path, headers: headers) }
 
     let(:current_user) { create(:user) }
-    let(:headers) {current_user.create_new_auth_token}
+    let(:headers) { current_user.create_new_auth_token }
     let(:tenant1) { create(:tenant, company_id: current_user.company_id) }
     let(:tenant2) { create(:tenant, company_id: current_user.company_id) }
 
@@ -23,7 +23,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
 
     context "指定したidの施設が存在する場合" do
       let(:current_user) { create(:user) }
-      let(:headers) {current_user.create_new_auth_token}
+      let(:headers) { current_user.create_new_auth_token }
       let(:tenant) { create(:tenant, company_id: current_user.company_id) }
       let(:tenant_id) { tenant.id }
 
@@ -40,9 +40,10 @@ RSpec.describe "Api::V1::Tenants", type: :request do
 
   describe "POST /api/v1/tenants" do
     subject { post(api_v1_tenants_path, params: params, headers: headers) }
+
     let(:area) { create(:area) }
     let(:current_user) { create(:user) }
-    let(:headers) {current_user.create_new_auth_token}
+    let(:headers) { current_user.create_new_auth_token }
     let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: area.id) } }
 
     it "current_userに紐付いた施設を作成できる" do
@@ -55,10 +56,11 @@ RSpec.describe "Api::V1::Tenants", type: :request do
 
   describe "PARCH/api/v1/tenants" do
     subject { patch(api_v1_tenant_path(tenant_id), params: params, headers: headers) }
+
     let(:current_user) { create(:user) }
-    let(:tenant) { create(:tenant, company_id: current_user.company_id ) }
+    let(:tenant) { create(:tenant, company_id: current_user.company_id) }
     let(:tenant_id) { tenant.id }
-    let(:headers) {current_user.create_new_auth_token}
+    let(:headers) { current_user.create_new_auth_token }
     let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: tenant.area_id) } }
 
     context "指定したidの施設が存在する場合" do
@@ -74,8 +76,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
 
     let!(:tenant) { create(:tenant, company_id: current_user.company_id) }
     let(:current_user) { create(:user) }
-    let(:headers) {current_user.create_new_auth_token}
-
+    let(:headers) { current_user.create_new_auth_token }
 
     context "指定したidの施設が存在する場合" do
       let(:tenant_id) { tenant.id }
