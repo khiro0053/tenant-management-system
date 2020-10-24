@@ -9,14 +9,17 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  area_id                    :bigint
+#  company_id                 :bigint
 #
 # Indexes
 #
-#  index_tenants_on_area_id  (area_id)
+#  index_tenants_on_area_id     (area_id)
+#  index_tenants_on_company_id  (company_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (area_id => areas.id)
+#  fk_rails_...  (company_id => companies.id)
 #
 require "rails_helper"
 

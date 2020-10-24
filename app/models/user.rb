@@ -22,13 +22,19 @@
 #  unconfirmed_email      :string(255)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  company_id             :bigint
 #
 # Indexes
 #
+#  index_users_on_company_id            (company_id)
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_uid_and_provider      (uid,provider) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
 #
 class User < ApplicationRecord
   extend Devise::Models
@@ -45,6 +51,6 @@ class User < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[!-~]+\z/.freeze
   validates :password, presence: true, length: { in: 8..32 }, format: { with: VALID_PASSWORD_REGEX }, if: :password_required?
 
-  has_many :user_tenants, dependent: :destroy
   has_many :tenants, through: :user_tenants
+  belongs_to :company
 end

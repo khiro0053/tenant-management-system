@@ -20,13 +20,19 @@
 #  unconfirmed_email      :string(255)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  company_id             :bigint
 #
 # Indexes
 #
+#  index_users_on_company_id            (company_id)
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_uid_and_provider      (uid,provider) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
 #
 FactoryBot.define do
   factory :user do
@@ -34,5 +40,6 @@ FactoryBot.define do
     sequence(:email) {|n| "#{n}_#{Faker::Internet.email}" }
     # Fakerで生成したパスワードでは半角大文字、小文字、数字それぞれ一文字ずつの条件を満たせないことがあるため先頭に”Aa1”をつけた
     password { "Aa1" + Faker::Internet.password(min_length: 5, max_length: 29, mix_case: true, special_characters: true) }
+    company
   end
 end

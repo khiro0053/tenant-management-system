@@ -31,6 +31,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :email
       t.string :password
+      t.references :company, foreign_key: true
 
       ## Tokens
       t.text :tokens
