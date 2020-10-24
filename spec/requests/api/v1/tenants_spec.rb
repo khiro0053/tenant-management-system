@@ -4,17 +4,19 @@ RSpec.describe "Api::V1::Tenants", type: :request do
   describe "GET /api/v1/tenants" do
     subject { get(api_v1_tenants_path, headers: headers) }
 
-    let(:current_user) { create(:user) }
-    let(:headers) { current_user.create_new_auth_token }
-    let(:tenant1) { create(:tenant, company_id: current_user.company_id) }
-    let(:tenant2) { create(:tenant, company_id: current_user.company_id) }
+    context "施設が存在する場合" do
+      let(:current_user) { create(:user) }
+      let(:headers) { current_user.create_new_auth_token }
+      let!(:tenant1) { create(:tenant, company_id: current_user.company_id) }
+      let!(:tenant2) { create(:tenant, company_id: current_user.company_id) }
 
-    it "施設一覧が取得できる" do
-      subject
-      res = JSON.parse(response.body)
-      expect(res.length).to eq 2
-      expect(res[0].keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
-      expect(response).to have_http_status(:ok)
+      it "施設一覧が取得できる" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res.length).to eq 2
+        expect(res[0].keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 
