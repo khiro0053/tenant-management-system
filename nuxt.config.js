@@ -49,6 +49,10 @@ export default {
     baseURL: 'http://localhost:3000/', // Used as fallback if no runtime config is provided
   },
 
+  publicRuntimeConfig: {
+    appName: process.env.APP_NAME // 環境変数からアプリ名取得
+  },
+
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
