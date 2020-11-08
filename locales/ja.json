@@ -1,0 +1,11 @@
+{
+  "menus": {
+    "about": "サイトについて",
+    "products": "製品",
+
+  },
+  "title": {
+    "signup": "会員登録",
+    "login": "ログイン"
+  }
+}
