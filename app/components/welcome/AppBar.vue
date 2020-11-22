@@ -21,7 +21,8 @@
         {{ $t(`menus.${menu.title}`) }}
       </v-btn>
     </v-toolbar-items>
-    {{isScrollPoint}}
+    <signup-link />
+    <login-link />
   </v-app-bar>
 </template>
 
