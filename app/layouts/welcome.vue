@@ -67,11 +67,14 @@
 <script>
 
 import Products from '~/components/welcome/Products'
-
+import About from '~/components/welcome/About'
+import Contact from '~/components/welcome/Contact'
 
 export default {
   components: {
     Products,
+    About,
+    Contact,
   },
   data () {
     return {
@@ -79,11 +82,7 @@ export default {
       menus: [
         { title: 'about', subtitle: '他にはない優れた機能の数々' },
         { title: 'products', subtitle: '他にはない優れた機能の数々' },
-        { title: 'about', subtitle: '他にはない優れた機能の数々' },
-        { title: 'products', subtitle: '他にはない優れた機能の数々' },
-        { title: 'products', subtitle: '他にはない優れた機能の数々' },
-        { title: 'about', subtitle: '他にはない優れた機能の数々' },
-        { title: 'products', subtitle: '他にはない優れた機能の数々' },
+        { title: 'contact', subtitle: '他にはない優れた機能の数々' },
       ]
     }
   }
