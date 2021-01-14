@@ -1,13 +1,13 @@
 <template>
   <div>
-    index.vue
+   index.vue
   </div>
 </template>
 
 <script>
 export default {
   layout ({ store }) {
-    return store.state.loggedIn ? 'default' : 'welcome'
+    return store.state.loggedIn ? 'loggedIn' : 'welcome'
   }
 }
 </script>
