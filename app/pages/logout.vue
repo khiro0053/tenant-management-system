@@ -3,9 +3,9 @@
 </template>
 <script>
 export default {
-  async middleware ({ store, redirect }) {
+  async middleware ({ store, redirect, from }) {
     await store.dispatch('logout')
-  if (from.name !== 'index') { return redirect('/') }
+    if (from.name !== 'index') { return redirect('/') }
   },
   layout: 'logout',
   beforeCreate () {
