@@ -40,6 +40,7 @@
 <script>
 export default {
   layout: 'beforeLogin',
+  auth: false,
   data () {
     return {
       isValid: false,
@@ -48,13 +49,11 @@ export default {
     }
   },
   methods: {
-    login () {
+    login (){
       this.loading = true
-      setTimeout(() => {
-        this.$store.dispatch('login')
-        this.$router.replace('/')
-        this.loading = false
-      },1500)
+      this.$store.dispatch('user/login', this.params.auth)
+      this.loading = false
+      this.$router.replace('/')
     }
   }
 }

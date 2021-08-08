@@ -4,7 +4,7 @@
 <script>
 export default {
   async middleware ({ store, redirect, from }) {
-    await store.dispatch('logout')
+    await store.dispatch('user/logout')
     if (from.name !== 'index') { return redirect('/') }
   },
   layout: 'logout',
