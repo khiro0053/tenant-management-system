@@ -114,6 +114,17 @@
               {{ $my.format(item.updatedAt) }}
             </template>
           </v-data-table>
+          <v-card-title>
+            全ての施設
+          </v-card-title>
+          <v-divider class="mb-4" />
+          <v-data-table
+            :headers="tenantHeaders"
+            :items="recentTenants"
+            item-key="id"
+            hide-default-footer
+          >
+          </v-data-table>
         </v-col>
       </v-row>
     </v-container>
@@ -125,7 +136,10 @@
 import homeImg from '~/assets/images/loggedIn/home.png'
 export default {
   layout ({ store }) {
-    return store.state.loggedIn ? 'loggedIn' : 'welcome'
+    return store.getters['user/getIsSignIn'] ? 'loggedIn' : 'welcome'
+  },
+  created () {
+    this.$store.dispatch('tenant/tenants_road')
   },
   data () {
     return {
@@ -150,6 +164,22 @@ export default {
           width: 150,
           value: 'updatedAt'
         }
+      ],
+      tenantHeaders: [
+        {
+          text: '施設名',
+          value: 'name'
+        },
+        {
+          text: '定員数',
+          width: 150,
+          value: 'capacity'
+        },
+        {
+          text: '目標入居者数',
+          width: 150,
+          value: 'target_number_of_residents'
+        },
       ]
     }
   },
@@ -159,6 +189,14 @@ export default {
       return copyProjects.sort((a, b) => {
         if (a.updatedAt > b.updatedAt) { return -1 }
         if (a.updatedAt < b.updatedAt) { return 1 }
+        return 0
+      })
+    },
+    recentTenants () {
+      const copyProjects = Array.from(this.$store.getters['tenant/getTenants'])
+      return copyProjects.sort((a, b) => {
+        if (a.capacity > b.capacity) { return -1 }
+        if (a.capacity < b.capacity) { return 1 }
         return 0
       })
     }
