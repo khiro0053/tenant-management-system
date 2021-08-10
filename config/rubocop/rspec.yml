@@ -72,3 +72,9 @@ RSpec/ReturnFromStub:
 
 RSpec/LetSetup:
   Enabled: false
+
+RSpec/IdenticalEqualityAssertion: # (new in 2.4)
+  Enabled: true
+
+RSpec/Rails/AvoidSetupHook: # (new in 2.4)
+  Enabled: true

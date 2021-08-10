@@ -20,7 +20,7 @@
 #
 FactoryBot.define do
   factory :room do
-    name { Random.new.rand(1..300).to_s + "号室" }
+    name { "#{Random.new.rand(1..300)}号室" }
     seating_capacity { Random.new.rand(1..2) }
     tenant
   end
