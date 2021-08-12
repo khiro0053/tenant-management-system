@@ -18,7 +18,8 @@ gem "uglifier", ">= 1.3.0"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker", "~> 5.x"
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
+
+gem "mini_racer", platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails", "~> 4.2"
@@ -52,8 +53,8 @@ group :development, :test do
   gem "pry-rails"
   gem "rack-cors"
   gem "rails-erd"
-  gem "rspec-rails"
   gem "rspec_junit_formatter"
+  gem "rspec-rails"
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "therubyracer"
@@ -70,4 +71,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data"

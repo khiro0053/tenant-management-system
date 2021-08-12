@@ -34,20 +34,15 @@ export default {
     return {
       isValid: false,
       loading: false,
-      params: { user: { name: '', email: '', password: '' } }
+      params: { user: { name: '', email: '', password: '', company_id: '1' } }
     }
   },
   methods: {
     signup () {
       this.loading = true
-      setTimeout(() => {
-        this.formReset()
-        this.loading = false
-      }, 1500)
-    },
-    formReset () {
-      this.$refs.form.reset()
-      this.params = {user: { name: '', email: '', password: ''} }
+      this.$store.dispatch('user/signup',this.params.user)
+      this.loading = false
+      window.location.href = '/login'
     }
   }
 }

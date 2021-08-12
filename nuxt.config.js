@@ -29,7 +29,11 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [
+    'plugins/axios.js',
+    'plugins/myInject.js',
+    'plugins/cookie-storage.js'
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -49,7 +53,8 @@ export default {
   ],
 
   axios: {
-    baseURL: 'http://localhost:3000/', // Used as fallback if no runtime config is provided
+    baseURL: 'http://localhost:3000', // Used as fallback if no runtime config is provided
+    credentials: true
   },
 
   publicRuntimeConfig: {
