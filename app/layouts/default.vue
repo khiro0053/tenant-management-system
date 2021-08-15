@@ -1,5 +1,13 @@
 <template>
-  <div>
-    <nuxt /> <!-- パスと一致するページファイルが呼び出しされる -->
-  </div>
+  <v-app>
+    <logged-in-header />
+    <v-main>
+      <nuxt />
+    </v-main>
+  </v-app>
 </template>
+
+<script>
+export default {
+}
+</script>
