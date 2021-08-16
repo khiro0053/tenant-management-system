@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+    v-model="setDrawer"
     app
     clipped
     mobile-breakpoint="960"
@@ -29,5 +30,17 @@
 
 <script>
 export default {
+  props: {
+    drawer: {
+      type: Boolean,
+      default: null
+    }
+  },
+  computed: {
+    setDrawer: {
+      get () { return this.drawer },
+      set (val) { return this.$emit('update:drawer', val) }
+    }
+  }
 }
 </script>
