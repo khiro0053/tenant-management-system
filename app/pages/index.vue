@@ -136,7 +136,7 @@
 import homeImg from '~/assets/images/loggedIn/home.png'
 export default {
   layout ({ store }) {
-    return store.getters['user/getIsSignIn'] ? 'loggedIn' : 'welcome'
+    return store.getters['user/getIsSignIn'] ? 'default' : 'welcome'
   },
   created () {
     this.$store.dispatch('tenant/tenants_road')
