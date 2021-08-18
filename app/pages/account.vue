@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  layout: 'loggedIn',
+  layout: 'default',
   validate ({ route }) {
     return route.name !== 'account'
   }
