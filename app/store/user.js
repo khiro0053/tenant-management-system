@@ -1,3 +1,4 @@
+import * as Cookies from 'js-cookie'
 export const state = () => ({
   isSignIn: false,
   headers: {},
@@ -56,7 +57,10 @@ export const actions = {
         console.log(error);
     });
   },
-  logout ({ commit }) {
-    commit('setIsSignIn', false)
-  },
+  async logout ({ commit }) {
+    await commit('setIsSignIn', false)
+    await commit('route/setRememberRoute', { name: 'index', params: {} }, {root:true})
+    Cookies.remove('tenant-manegement')
+    Cookies.remove('ridirectPath')
+  }
 }
