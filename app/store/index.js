@@ -1,3 +1,4 @@
+import $cookies from "cookie-universal-nuxt"
 export const state = () => ({
   drawer: true,
   styles: {
