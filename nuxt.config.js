@@ -50,6 +50,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'nuxt-i18n',
+    'cookie-universal-nuxt'
   ],
 
   axios: {
