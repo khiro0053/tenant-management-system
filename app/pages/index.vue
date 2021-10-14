@@ -135,6 +135,7 @@
 <script>
 import homeImg from '~/assets/images/loggedIn/home.png'
 export default {
+  middleware: 'authenticator',
   layout ({ store }) {
     return store.getters['user/getIsSignIn'] ? 'default' : 'welcome'
   },

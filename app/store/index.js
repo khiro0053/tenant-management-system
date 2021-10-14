@@ -29,5 +29,12 @@ export const actions = {
   getCurrentProject ({ state, commit }, params) {
     const currentProject = state.projects.find(project => project.id === Number(params.id))
     commit('setCurrentProject', currentProject)
+  },
+  async nuxtServerInit ({commit}, context) {
+    const data = context.app.$cookies.get('tenant-manegement') || []
+    if ("user" in data){
+      commit('user/setIsSignIn', data.user.isSignIn)
+      commit ('user/setHeaders', data.user.headers)
+    }
   }
 }

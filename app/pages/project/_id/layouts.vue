@@ -6,5 +6,6 @@
 
 <script>
 export default {
+  name: "layouts"
 }
 </script>

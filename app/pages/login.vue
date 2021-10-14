@@ -48,12 +48,19 @@ export default {
       params: { auth: {email: '', password: '' }}
     }
   },
+  mounted() {
+    let ridirectPath = this.$cookies.get('ridirectPath') || []
+    if (ridirectPath.length){
+
+      this.$store.commit('route/setRememberRoute', ridirectPath)
+    }
+  },
   methods: {
-    login (){
+    async login (from, route){
       this.loading = true
-      this.$store.dispatch('user/login', this.params.auth)
+      await this.$store.dispatch('user/login', this.params.auth)
       this.loading = false
-      this.$router.replace('/')
+    　this.$router.push(this.$store.state.route.rememberRoute)
     }
   }
 }

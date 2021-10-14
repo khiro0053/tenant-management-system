@@ -50,6 +50,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'nuxt-i18n',
+    'cookie-universal-nuxt'
   ],
 
   axios: {
@@ -98,4 +99,10 @@ export default {
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+  vue: {
+    config: {
+      productionTip: true,
+      devtools: true
+    }
+  }
 }
