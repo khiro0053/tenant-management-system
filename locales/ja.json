@@ -16,7 +16,7 @@
     "project": {
       "id": {
         "dashboard": "ダッシュボード",
-        "layouts": "レイアウト",
+        "tenants": "施設",
         "pages": "ページ",
         "components": "コンポーネント",
         "settings": "設定",
