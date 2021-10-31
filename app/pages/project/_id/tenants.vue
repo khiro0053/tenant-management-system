@@ -18,7 +18,6 @@
           <template v-slot:item.name="props">
             <v-edit-dialog
               :return-value="props.item.name"
-              v-on:change="updateTenant"
               @save="save"
               @cancel="cancel"
               @open="open"
@@ -55,8 +54,6 @@
               編集
             </v-btn>
           </template>
-        </v-data-table>
-
         </v-data-table>
       </v-col>
     </v-row>
