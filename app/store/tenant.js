@@ -20,14 +20,22 @@ export const getters = {
 }
 
 export const mutations = {
-  setTenants(state, tenants) {
-    state.tenants = tenants
+  setTenants(state, payload) {
+    state.tenants = payload
   },
-  setTenant(state, updateTenant) {
-    const id = updateTenant.id
+  setTenant(state, payload) {
+    const id = payload.id
     const targetTenantID = state.tenants.findIndex((tenant) => tenant.id === id)
-    Vue.set(state.tenants, targetTenantID, updateTenant)
-    console.log(state.tenants[targetTenantID])
+    if (targetTenantID　!== -1) {
+      Vue.set(state.tenants, targetTenantID, payload)
+    } else {
+      state.tenants.push(payload)
+    }
+  },
+  deleteTenant(state, payload){
+    const id = payload.id
+    const targetTenantID = state.tenants.findIndex((tenant) => tenant.id === id)
+    state.tenants.splice(targetTenantID, 1)
   }
 }
 
@@ -39,8 +47,19 @@ export const actions = {
       commit('setTenants', tenants)
     })
   },
-  async tenantsUpdate({commit},data) {
-    await this.$axios.put(`/api/v1/tenants/${data.tenant.id}`, data)
+  async tenantCreate({ commit }, data) {
+    await this.$axios.post('/api/v1/tenants', data)
+    .then((response) => {
+      console.log("クリエイト")
+      const tenant = response.data
+      commit('setTenant', tenant)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  },
+  async tenantUpdate({commit},data) {
+    await this.$axios.put(`/api/v1/tenants/${data.id}`, data)
     .then((response) =>{
       const tenant = response.data
       commit('setTenant', tenant)
@@ -48,5 +67,15 @@ export const actions = {
     .catch((error) => {
       console.log(error)
     })
-  }
+  },
+  async tenantDelete({commit},data) {
+    await this.$axios.delete(`/api/v1/tenants/${data.id}`)
+    .then((response) =>{
+      const tenant = response.data
+      commit('deleteTenant', tenant)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  },
 }
