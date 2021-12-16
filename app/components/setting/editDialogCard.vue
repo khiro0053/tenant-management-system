@@ -6,20 +6,18 @@
     <v-card-text>
       <v-container>
         <v-row>
-         <div v-for="(value, key, index) in editedItem" :key="index">
             <v-col
-              v-if="key != 'id'"
+              v-for="(value, key, index) in showItem" :key="index"
               cols="12"
               sm="6"
               md="4"
             >
               <v-text-field
-                v-model.trim="editedItem[key]"
+                v-model.trim="showItem[key]"
                 :label="dialogLabel[key]"
               >
               </v-text-field>
             </v-col>
-          </div>
         </v-row>
       </v-container>
     </v-card-text>
@@ -35,7 +33,7 @@
       <v-btn
         color="blue darken-1"
         text
-        @click="save"
+        @click="save()"
       >
         保存
       </v-btn>
@@ -58,14 +56,23 @@ export default {
       type: Object,
       required: true,
     },
+    omitKeys: Array
+  },
+  computed: {
+    showItem() {
+     let showItem = Object.assign({}, this.editedItem)
+     for (let omitKey of this.omitKeys){
+       delete showItem[omitKey]
+     }
+     return showItem
+    }
   },
   methods: {
     close(){
       this.$emit("close-click")
-      console.log("dialog close")
     },
     save(){
-      this.$emit("save-click")
+      this.$emit("save-click", this.showItem)
     }
   }
 }
