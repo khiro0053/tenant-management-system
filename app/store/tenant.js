@@ -8,6 +8,7 @@ export const state = () => ({
     { id: 5, name: 'オレンジライフ', capacity: '10' }
   ],
   tenants: {},
+  errors: {}
 })
 
 export const getters = {
@@ -16,6 +17,9 @@ export const getters = {
   },
   getTenants2: state => {
     return state.tenants2
+  },
+  getErrors: state => {
+    return state.errors
   }
 }
 
@@ -36,6 +40,9 @@ export const mutations = {
     const id = payload.id
     const targetTenantID = state.tenants.findIndex((tenant) => tenant.id === id)
     state.tenants.splice(targetTenantID, 1)
+  },
+  setErrors(state, payload){
+    state.errors = payload
   }
 }
 
@@ -55,7 +62,10 @@ export const actions = {
       commit('setTenant', tenant)
     })
     .catch((error) => {
-      console.log(error)
+      if (error.response.data.errors) {
+        const error_messagees = error.response.data.errors
+        commit('setErrors', error_messagees )
+      }
     })
   },
   async tenantUpdate({commit},data) {
@@ -65,7 +75,10 @@ export const actions = {
       commit('setTenant', tenant)
     })
     .catch((error) => {
-      console.log(error)
+      if (error.response.data.errors) {
+        const error_messagees = error.response.data.errors
+        commit('setErrors', error_messagees )
+      }
     })
   },
   async tenantDelete({commit},data) {
@@ -75,7 +88,7 @@ export const actions = {
       commit('deleteTenant', tenant)
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error.response)
     })
   },
 }
