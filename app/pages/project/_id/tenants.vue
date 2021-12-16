@@ -142,7 +142,7 @@ export default {
       console.log('Dialog closed')
     },
     updateTenant(val)　{
-      this.$store.dispatch('tenant/tenantsUpdate', val)
+      this.$store.dispatch('tenant/tenantUpdate', val)
     }
   }
 }
