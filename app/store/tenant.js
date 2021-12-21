@@ -7,7 +7,7 @@ export const state = () => ({
     { id: 4, name: 'ブルーライフ', capacity: '25' },
     { id: 5, name: 'オレンジライフ', capacity: '10' }
   ],
-  tenants: {},
+  tenants: [],
   errors: {}
 })
 
