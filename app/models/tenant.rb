@@ -8,18 +8,18 @@
 #  target_number_of_residents :integer
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  area_id                    :bigint
 #  company_id                 :bigint
+#  tenant_group_id            :bigint
 #
 # Indexes
 #
-#  index_tenants_on_area_id     (area_id)
-#  index_tenants_on_company_id  (company_id)
+#  index_tenants_on_company_id       (company_id)
+#  index_tenants_on_tenant_group_id  (tenant_group_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (area_id => areas.id)
 #  fk_rails_...  (company_id => companies.id)
+#  fk_rails_...  (tenant_group_id => tenant_groups.id)
 #
 class Tenant < ApplicationRecord
   validates :name, presence: true, length: { in: 1..50 }
@@ -37,5 +37,5 @@ class Tenant < ApplicationRecord
   has_many :rooms, dependent: :destroy
   has_many :residents, dependent: :restrict_with_exception
   belongs_to :company
-  belongs_to :area
+  belongs_to :tenant_group
 end

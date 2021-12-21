@@ -42,7 +42,7 @@ export default {
         name:'施設名',
         capacity:'定員数',
         target_number_of_residents:'目標入居者',
-        area:'グループ'
+        tenant_group:'グループ'
 
       },
       toolbarTitle: "エリア一覧",
@@ -53,15 +53,15 @@ export default {
         name: '',
         capacity: 0,
         target_number_of_residents: 0,
-        area_id: 1
+        tenant_group_id: 1
       },
       defaultItem: {
         name: '',
         capacity: 0,
         target_number_of_residents: 0,
-        area_id: 1
+        tenant_group_id: 1
       },
-      omitKeys:['id','area','area_id']
+      omitKeys:['id','tenant_group','tenant_group_id']
     }
   },
   computed: {
@@ -128,7 +128,7 @@ export default {
         this.$store.dispatch('tenant/tenantUpdate',item)
       } else {
         //新規作成
-        item["area_id"] = this.editedItem["area_id"]
+        item["tenant_group_id"] = this.editedItem["tenant_group_id"]
         this.$store.dispatch('tenant/tenantCreate',item)
       }
       this.close()

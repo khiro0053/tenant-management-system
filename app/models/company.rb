@@ -10,5 +10,6 @@
 class Company < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30 }
   has_many :tenants, dependent: :restrict_with_error
+  has_many :tenant_groups, dependent: :restrict_with_error
   has_many :users, dependent: :restrict_with_error
 end

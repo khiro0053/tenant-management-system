@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         sessions: "api/v1/auth/sessions",
       }
       resources :tenants
+      resources :tenant_groups
     end
   end
 end

@@ -40,6 +40,6 @@ class Api::V1::TenantsController < Api::V1::ApiController
     end
 
     def tenant_params
-      params.require(:tenant).permit(:name, :target_number_of_residents, :capacity, :area_id)
+      params.require(:tenant).permit(:name, :target_number_of_residents, :capacity, :tenant_group_id)
     end
 end
