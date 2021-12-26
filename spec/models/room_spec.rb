@@ -35,7 +35,7 @@ RSpec.describe Room, type: :model do
       let(:room) { build(:room, name: nil) }
       it "作成できない" do
         expect(room).not_to be_valid
-        expect(room.errors.messages[:name][0]).to include "can't be blank"
+        expect(room.errors.messages[:name][0]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Room, type: :model do
       let(:room) { build(:room, name: "x" * 21) }
       it "作成できない" do
         expect(room).not_to be_valid
-        expect(room.errors.messages[:name][0]).to include "is too long (maximum is 20 characters)"
+        expect(room.errors.messages[:name][0]).to include(I18n.t('errors.messages.too_long', count: 20))
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Room, type: :model do
       let(:room) { build(:room, seating_capacity: nil) }
       it "作成できない" do
         expect(room).not_to be_valid
-        expect(room.errors.messages[:seating_capacity]).to include "can't be blank"
+        expect(room.errors.messages[:seating_capacity]).to include(I18n.t('errors.messages.blank'))
       end
     end
   end

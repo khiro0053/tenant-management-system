@@ -28,5 +28,6 @@ FactoryBot.define do
     name { Faker::Company.name }
     target_number_of_residents { 18 }
     company
+    tenant_group
   end
 end

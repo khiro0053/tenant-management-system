@@ -38,7 +38,7 @@ RSpec.describe Tenant, type: :model do
       let(:tenant) { build(:tenant, name: nil) }
       it "施設が作成できない" do
         expect(tenant).not_to be_valid
-        expect(tenant.errors.messages[:name]).to include "can't be blank"
+        expect(tenant.errors.messages[:name]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe Tenant, type: :model do
       let(:tenant) { build(:tenant, name: Faker::Lorem.characters(number: 51)) }
       it "施設が作成できない" do
         expect(tenant).not_to be_valid
-        expect(tenant.errors.messages[:name]).to include "is too long (maximum is 50 characters)"
+        expect(tenant.errors.messages[:name]).to include(I18n.t('errors.messages.too_long', count:50))
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Tenant, type: :model do
       let(:tenant) { build(:tenant, capacity: nil) }
       it "施設が作成できない" do
         expect(tenant).not_to be_valid
-        expect(tenant.errors.messages[:capacity]).to include "can't be blank"
+        expect(tenant.errors.messages[:capacity]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe Tenant, type: :model do
 
       it "施設が作成できない" do
         expect(tenant).not_to be_valid
-        expect(tenant.errors.messages[:target_number_of_residents]).to include "定員数を上回る目標は設定できません"
+        expect(tenant.errors.messages[:target_number_of_residents]).to include "は定員数以下に設定してください"
       end
     end
   end

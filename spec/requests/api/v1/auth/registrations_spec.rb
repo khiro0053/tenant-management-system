@@ -29,7 +29,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect { subject }.to change { User.count }.by(0)
         expect(response).to have_http_status(:unprocessable_entity)
         res = JSON.parse(response.body)["errors"]
-        expect(res["name"]).to include "can't be blank"
+        expect(res["name"]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect { subject }.to change { User.count }.by(0)
         expect(response).to have_http_status(:unprocessable_entity)
         res = JSON.parse(response.body)["errors"]
-        expect(res["email"]).to include "can't be blank"
+        expect(res["email"]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect { subject }.to change { User.count }.by(0)
         expect(response).to have_http_status(:unprocessable_entity)
         res = JSON.parse(response.body)["errors"]
-        expect(res["email"]).to include "has already been taken"
+        expect(res["email"]).to include(I18n.t('errors.messages.taken'))
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect { subject }.to change { User.count }.by(0)
         expect(response).to have_http_status(:unprocessable_entity)
         res = JSON.parse(response.body)["errors"]
-        expect(res["password"]).to include "can't be blank"
+        expect(res["password"]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect { subject }.to change { User.count }.by(0)
         expect(response).to have_http_status(:unprocessable_entity)
         res = JSON.parse(response.body)["errors"]
-        expect(res["company"]).to include "must exist"
+        expect(res["company"]).to include(I18n.t('errors.messages.blank'))
       end
     end
   end

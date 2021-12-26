@@ -36,7 +36,7 @@ RSpec.describe Resident, type: :model do
       let(:resident) { build(:resident, first_name: nil) }
       it "登録ができない" do
         expect(resident).not_to be_valid
-        expect(resident.errors.messages[:first_name]).to include "can't be blank"
+        expect(resident.errors.messages[:first_name]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Resident, type: :model do
       let(:resident) { build(:resident, first_name: "x" * 21) }
       it "登録ができない" do
         expect(resident).not_to be_valid
-        expect(resident.errors.messages[:first_name]).to include "is too long (maximum is 20 characters)"
+        expect(resident.errors.messages[:first_name]).to include(I18n.t('errors.messages.too_long', count: 20))
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Resident, type: :model do
       let(:resident) { build(:resident, last_name: nil) }
       it "登録ができない" do
         expect(resident).not_to be_valid
-        expect(resident.errors.messages[:last_name]).to include "can't be blank"
+        expect(resident.errors.messages[:last_name]).to include(I18n.t('errors.messages.blank'))
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Resident, type: :model do
       let(:resident) { build(:resident, last_name: "x" * 21) }
       it "登録ができない" do
         expect(resident).not_to be_valid
-        expect(resident.errors.messages[:last_name]).to include "is too long (maximum is 20 characters)"
+        expect(resident.errors.messages[:last_name]).to include(I18n.t('errors.messages.too_long', count: 20))
       end
     end
   end

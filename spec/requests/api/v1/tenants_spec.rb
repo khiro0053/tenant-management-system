@@ -14,7 +14,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 2
-        expect(res[0].keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
+        expect(res[0].keys).to eq ["id", "name",  "capacity","target_number_of_residents", "tenant_group"]
         expect(response).to have_http_status(:ok)
       end
     end
@@ -43,15 +43,15 @@ RSpec.describe "Api::V1::Tenants", type: :request do
   describe "POST /api/v1/tenants" do
     subject { post(api_v1_tenants_path, params: params, headers: headers) }
 
-    let(:area) { create(:area) }
+    let(:tenant_group) { create(:tenant_group) }
     let(:current_user) { create(:user) }
     let(:headers) { current_user.create_new_auth_token }
-    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: area.id) } }
+    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, tenant_group_id: tenant_group.id) } }
 
     it "current_userに紐付いた施設を作成できる" do
       expect { subject }.to change { current_user.company.tenants.count }.by(1)
       res = JSON.parse(response.body)
-      expect(res.keys).to eq ["id", "name", "target_number_of_residents", "capacity", "area"]
+      expect(res.keys).to eq ["id", "name", "capacity", "target_number_of_residents", "tenant_group"]
       expect(response).to have_http_status(:ok)
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
     let(:tenant) { create(:tenant, company_id: current_user.company_id) }
     let(:tenant_id) { tenant.id }
     let(:headers) { current_user.create_new_auth_token }
-    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, area_id: tenant.area_id) } }
+    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, tenant_group_id: tenant.tenant_group_id) } }
 
     context "指定したidの施設が存在する場合" do
       it "施設情報の更新ができる" do

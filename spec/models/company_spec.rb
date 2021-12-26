@@ -22,7 +22,7 @@ RSpec.describe Company, type: :model do
       let(:company) { build(:company, name: "x" * 31) }
       it "登録できない" do
         expect(company).not_to be_valid
-        expect(company.errors.messages[:name]).to include "is too long (maximum is 30 characters)"
+        expect(company.errors.messages[:name]).to include(I18n.t('errors.messages.too_long', count: 30))
       end
     end
   end
