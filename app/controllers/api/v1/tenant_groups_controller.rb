@@ -16,7 +16,7 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
     if @tenant_group.save
       render json: @tenant_group
     else
-      render json: { errors: @tenant_group.errors.keys.map { |key| [key, @tenant_group.errors.full_messages_for(key)]}.to_h}, status: :unprocessable_entity
+      render json: { errors: @tenant_group.errors.keys.map {|key| [key, @tenant_group.errors.full_messages_for(key)] }.to_h }, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
     if @tenant.update(tenant_params)
       render json: @tenant_group
     else
-      render json: { errors: @tenant_group.errors.keys.map { |key| [key, @tenant.errors.full_messages_for(key)]}.to_h}, status: :unprocessable_entity
+      render json: { errors: @tenant_group.errors.keys.map {|key| [key, @tenant.errors.full_messages_for(key)] }.to_h }, status: :unprocessable_entity
     end
   end
 
@@ -40,6 +40,6 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
     end
 
     def tenant_group_params
-      params.require(:tenant_group).permit(:name )
+      params.require(:tenant_group).permit(:name)
     end
 end

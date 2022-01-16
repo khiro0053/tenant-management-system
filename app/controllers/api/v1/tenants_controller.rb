@@ -16,7 +16,7 @@ class Api::V1::TenantsController < Api::V1::ApiController
     if @tenant.save
       render json: @tenant
     else
-      render json: { errors: @tenant.errors.keys.map { |key| [key, @tenant.errors.full_messages_for(key)]}.to_h}, status: :unprocessable_entity
+      render json: { errors: @tenant.errors.keys.map {|key| [key, @tenant.errors.full_messages_for(key)] }.to_h }, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::TenantsController < Api::V1::ApiController
     if @tenant.update(tenant_params)
       render json: @tenant
     else
-      render json: { errors: @tenant.errors.keys.map { |key| [key, @tenant.errors.full_messages_for(key)]}.to_h}, status: :unprocessable_entity
+      render json: { errors: @tenant.errors.keys.map {|key| [key, @tenant.errors.full_messages_for(key)] }.to_h }, status: :unprocessable_entity
     end
   end
 

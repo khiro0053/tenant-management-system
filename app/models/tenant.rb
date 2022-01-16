@@ -30,7 +30,7 @@ class Tenant < ApplicationRecord
     self.target_number_of_residents ||= 0
     self.capacity ||= 0
     if self.target_number_of_residents > self.capacity
-      errors.add(:target_number_of_residents, 'は定員数以下に設定してください')
+      errors.add(:target_number_of_residents, "は定員数以下に設定してください")
     end
   end
 

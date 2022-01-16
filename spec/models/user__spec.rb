@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, name: nil) }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:name]).to include(I18n.t('errors.messages.blank'))
+        expect(user.errors.messages[:name]).to include(I18n.t("errors.messages.blank"))
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, name: "x") }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:name]).to include(I18n.t('errors.messages.too_short', count:2))
+        expect(user.errors.messages[:name]).to include(I18n.t("errors.messages.too_short", count: 2))
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, name: "x" * 51) }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:name]).to include(I18n.t('errors.messages.too_long', count:50))
+        expect(user.errors.messages[:name]).to include(I18n.t("errors.messages.too_long", count: 50))
       end
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, email: nil) }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:email]).to include(I18n.t('errors.messages.blank'))
+        expect(user.errors.messages[:email]).to include(I18n.t("errors.messages.blank"))
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, email: "aaa@bbb.ccc") }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:email]).to include(I18n.t('errors.messages.taken'))
+        expect(user.errors.messages[:email]).to include(I18n.t("errors.messages.taken"))
       end
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: nil) }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.blank'))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.blank"))
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: "Abcdef1") }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.too_short', count:8))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.too_short", count: 8))
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: Faker::Internet.password(min_length: 33, mix_case: true, special_characters: true)) }
       it "ユーザー登録できない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.too_long', count:32))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.too_long", count: 32))
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: "abcdEFGH") }
       it "ユーザー登録ができない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.invalid'))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.invalid"))
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: "ABCD1234") }
       it "ユーザー登録ができない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.invalid'))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.invalid"))
       end
     end
 
@@ -101,7 +101,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: "abcd1234") }
       it "ユーザー登録ができない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.invalid'))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.invalid"))
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: "ｚEｎｋAｋ1") }
       it "ユーザー登録ができない" do
         expect(user).not_to be_valid
-        expect(user.errors.messages[:password]).to include(I18n.t('errors.messages.invalid'))
+        expect(user.errors.messages[:password]).to include(I18n.t("errors.messages.invalid"))
       end
     end
   end

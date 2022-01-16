@@ -14,7 +14,7 @@ RSpec.describe "Api::V1::Tenants", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 2
-        expect(res[0].keys).to eq ["id", "name",  "capacity","target_number_of_residents", "tenant_group"]
+        expect(res[0].keys).to eq ["id", "name", "capacity", "target_number_of_residents", "tenant_group"]
         expect(response).to have_http_status(:ok)
       end
     end
