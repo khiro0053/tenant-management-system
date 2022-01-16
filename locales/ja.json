@@ -13,10 +13,10 @@
       "settings": "設定",
       "password": "パスワード"
     },
-    "project": {
+    "settings": {
       "id": {
         "dashboard": "ダッシュボード",
-        "layouts": "レイアウト",
+        "tenants": "施設",
         "pages": "ページ",
         "components": "コンポーネント",
         "settings": "設定",

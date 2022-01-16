@@ -38,11 +38,11 @@ export default {
     }
   },
   methods: {
-    signup () {
+    async signup () {
       this.loading = true
-      this.$store.dispatch('user/signup',this.params.user)
+      await this.$store.dispatch('user/signup',this.params.user)
       this.loading = false
-      window.location.href = '/login'
+      window.location.href = '/'
     }
   }
 }

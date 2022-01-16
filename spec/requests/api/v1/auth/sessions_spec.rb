@@ -26,7 +26,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         res = JSON.parse(response.body)
         header = response.header
         expect(response).to have_http_status(:unauthorized)
-        expect(res["errors"]).to include "Invalid login credentials. Please try again."
+        expect(res["errors"]).to include "ログイン用の認証情報が正しくありません。再度お試しください。"
         expect(header["access-token"]).to be_blank
         expect(header["client"]).to be_blank
       end
@@ -41,7 +41,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         res = JSON.parse(response.body)
         header = response.header
         expect(response).to have_http_status(:unauthorized)
-        expect(res["errors"]).to include "Invalid login credentials. Please try again."
+        expect(res["errors"]).to include "ログイン用の認証情報が正しくありません。再度お試しください。"
         expect(header["access-token"]).to be_blank
         expect(header["client"]).to be_blank
       end
@@ -70,7 +70,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         subject
         expect(response).to have_http_status(:not_found)
         res = JSON.parse(response.body)
-        expect(res["errors"]).to include "User was not found or was not logged in."
+        expect(res["errors"]).to include "ユーザーが見つからないか、ログインしていません。"
       end
     end
   end

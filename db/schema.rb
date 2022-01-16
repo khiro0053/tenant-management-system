@@ -10,14 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_153504) do
-
-  create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_areas_on_name", unique: true
-  end
+ActiveRecord::Schema.define(version: 2021_12_16_144116) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -57,16 +50,25 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
     t.index ["tenant_id"], name: "index_rooms_on_tenant_id"
   end
 
+  create_table "tenant_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_tenant_groups_on_company_id"
+    t.index ["name"], name: "index_tenant_groups_on_name", unique: true
+  end
+
   create_table "tenants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "target_number_of_residents"
     t.bigint "company_id"
-    t.bigint "area_id"
+    t.bigint "tenant_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "capacity"
-    t.index ["area_id"], name: "index_tenants_on_area_id"
     t.index ["company_id"], name: "index_tenants_on_company_id"
+    t.index ["tenant_group_id"], name: "index_tenants_on_tenant_group_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -104,7 +106,8 @@ ActiveRecord::Schema.define(version: 2020_08_13_153504) do
   add_foreign_key "room_assingments", "residents"
   add_foreign_key "room_assingments", "rooms"
   add_foreign_key "rooms", "tenants"
-  add_foreign_key "tenants", "areas"
+  add_foreign_key "tenant_groups", "companies"
   add_foreign_key "tenants", "companies"
+  add_foreign_key "tenants", "tenant_groups"
   add_foreign_key "users", "companies"
 end

@@ -63,7 +63,7 @@
                     block
                     :height="card.height"
                     :elevation="card.elevation"
-                    :to="$my.projectLinkTo(project.id)"
+                    :to="$my.settingsLinkTo(project.id)"
                     class="v-btn text-capitalize"
                   >
                     <v-card-title class="pb-1 d-block text-truncate">
@@ -104,7 +104,7 @@
           >
             <template v-slot:item.name="{ item }">
               <nuxt-link
-                :to="$my.projectLinkTo(item.id)"
+                :to="$my.settingsLinkTo(item.id)"
                 class="text-decoration-none"
               >
                 {{ item.name }}

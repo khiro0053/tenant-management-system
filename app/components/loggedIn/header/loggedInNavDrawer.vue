@@ -9,7 +9,7 @@
       <v-list-item
         v-for="(nav, i) in navMenus"
         :key="`nav-${i}`"
-        :to="$my.projectLinkTo($route.params.id, nav.name)"
+        :to="$my.settingsLinkTo($route.params.id, nav.name)"
       >
         <v-list-item-icon>
           <v-icon v-text="nav.icon" />
@@ -23,23 +23,6 @@
       </v-list-item>
 
       <v-divider />
-
-      <v-list-item
-        href="https://blog.cloud-acct.com/categories/udemy"
-        target="_blank"
-      >
-        <v-list-item-icon>
-          <v-icon>
-            mdi-open-in-new
-          </v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title>
-            このアプリの作り方
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -55,12 +38,12 @@ export default {
   data () {
     return {
       navMenus: [
-        { name: 'project-id-dashboard', icon: 'mdi-view-dashboard' },
-        { name: 'project-id-layouts', icon: 'mdi-view-compact' },
-        { name: 'project-id-pages', icon: 'mdi-image' },
-        { name: 'project-id-components', icon: 'mdi-view-comfy' },
-        { name: 'project-id-settings', icon: 'mdi-cog' },
-        { name: 'project-id-help', icon: 'mdi-help-circle' }
+        { name: 'settings-id-dashboard', icon: 'mdi-view-dashboard' },
+        { name: 'settings-id-tenants', icon: 'mdi-view-compact' },
+        { name: 'settings-id-pages', icon: 'mdi-image' },
+        { name: 'settings-id-components', icon: 'mdi-view-comfy' },
+        { name: 'settings-id-settings', icon: 'mdi-cog' },
+        { name: 'settings-id-help', icon: 'mdi-help-circle' }
       ]
     }
   },
