@@ -38,7 +38,7 @@ export default {
   data () {
     return {
       navMenus: [
-        { name: 'settings-id-dashboard', icon: 'mdi-view-dashboard' },
+        { name: 'settings-id-tenantGroups', icon: 'mdi-view-dashboard' },
         { name: 'settings-id-tenants', icon: 'mdi-view-compact' },
         { name: 'settings-id-pages', icon: 'mdi-image' },
         { name: 'settings-id-components', icon: 'mdi-view-comfy' },
