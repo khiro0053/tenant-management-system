@@ -6,8 +6,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-TenantGroup.create!(
-  name: "未設定",
-  id: 1,
-  company_id: 1
-)
+# TenantGroup.create!(
+#  name: "未設定",
+#  id: 1,
+#  company_id: 1
+# )
