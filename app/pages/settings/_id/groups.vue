@@ -18,6 +18,7 @@
      :edited-item="editedItem"
      :errors="errors"
      :omitKeys="omitKeys"
+     :groupShow="groupShow"
     />
   </logged-in-container>
 
@@ -45,7 +46,8 @@ export default {
       defaultItem: {
         name: ''
       },
-      omitKeys:['id']
+      omitKeys:['id'],
+      groupShow: false,
     }
   },
   computed: {
@@ -114,7 +116,6 @@ export default {
         //新規作成
         item["tenant_group_id"] = this.editedItem["tenant_group_id"]
         this.$store.dispatch('tenantGroup/tenantGroupCreate',item)
-        debugger
       }
       this.close()
     },

@@ -11,6 +11,7 @@
      @closeDelete-click="closeDelete"
      @save-click="save"
      @deleteItemConfirm="deleteItemConfirm"
+     @select-group="selectGroup"
      :data-table-edit-dialog="editDialogShow"
      :data-table-delete-dialog="deleteDialogShow"
      :form-title="formTitle"
@@ -18,6 +19,8 @@
      :edited-item="editedItem"
      :errors="errors"
      :omitKeys="omitKeys"
+     :groups="groups"
+     :groupShow="groupShow"
     />
   </logged-in-container>
 
@@ -36,6 +39,7 @@ export default {
         },
         { text: '定員数', value: 'capacity' },
         { text: '目標入居者数', value: 'target_number_of_residents' },
+        { text: 'グループ', value: 'tenant_group[name]' },
         { text: '編集・削除', value: 'actions', sortable: false },
       ],
       dialogLabel: {
@@ -53,21 +57,35 @@ export default {
         name: '',
         capacity: 0,
         target_number_of_residents: 0,
-        tenant_group_id: 1
+        tenant_group_id: 0,
+        tenant_group: {
+          id: 0,
+          name: ''
+        }
       },
       defaultItem: {
         name: '',
         capacity: 0,
         target_number_of_residents: 0,
-        tenant_group_id: 1
+        tenant_group_id: 0,
+        tenant_group: {
+          id: 0,
+          name: ''
+        }
       },
-      omitKeys:['id','tenant_group','tenant_group_id']
+      omitKeys:['id','tenant_group', 'tenant_group_id'],
+      groupShow: true
     }
   },
   computed: {
     items: {
        get() {
          return this.$store.getters['tenant/getTenants']
+       }
+    },
+    groups: {
+       get() {
+         return this.$store.getters['tenantGroup/getTenantGroups']
        }
     },
     errors: {
@@ -81,6 +99,7 @@ export default {
   },
   created () {
     this.$store.dispatch('tenant/tenants_road'),
+    this.$store.dispatch('tenantGroup/tenantGroups_road'),
     this.clearError()
   },
   watch: {
@@ -99,6 +118,10 @@ export default {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.editDialogShow = true
+    },
+    selectGroup(group) {
+      this.editedItem["tenant_group"] = group
+      this.editedItem["tenant_group_id"] = group.id
     },
     deleteItem (item) {
       this.editedIndex = this.items.indexOf(item)
@@ -128,7 +151,7 @@ export default {
         this.$store.dispatch('tenant/tenantUpdate',item)
       } else {
         //新規作成
-        item["tenant_group_id"] = this.editedItem["tenant_group_id"]
+        item["tenant_group_id"] = this.editedItem["tenant_group"]["id"]
         this.$store.dispatch('tenant/tenantCreate',item)
       }
       this.close()
