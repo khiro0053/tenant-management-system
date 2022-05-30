@@ -7,3 +7,5 @@ ja:
           name: 施設名
           capacity: 定員数
           target_number_of_residents: 目標入居者数
+        tenant_group:
+          name: グループ名
