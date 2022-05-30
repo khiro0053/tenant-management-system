@@ -57,7 +57,6 @@ export const actions = {
   async tenantCreate({ commit }, data) {
     await this.$axios.post('/api/v1/tenants', data)
     .then((response) => {
-      console.log("クリエイト")
       const tenant = response.data
       commit('setTenant', tenant)
     })

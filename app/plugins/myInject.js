@@ -14,7 +14,7 @@ class MyInject {
     )
     return dateTimeFormat.format(new Date(date))
   }
-  settingsLinkTo (id, name = 'settings-id-dashboard') {
+  settingsLinkTo (id, name = 'settings-id-tenants') {
     return { name, params: { id } }
   }
 }

@@ -11,7 +11,6 @@
      @closeDelete-click="closeDelete"
      @save-click="save"
      @deleteItemConfirm="deleteItemConfirm"
-     @select-group="selectGroup"
      :data-table-edit-dialog="editDialogShow"
      :data-table-delete-dialog="deleteDialogShow"
      :form-title="formTitle"
@@ -19,7 +18,6 @@
      :edited-item="editedItem"
      :errors="errors"
      :omitKeys="omitKeys"
-     :groups="groups"
      :groupShow="groupShow"
     />
   </logged-in-container>
@@ -28,69 +26,39 @@
 
 <script>
 export default {
-  name: "tenants",
+  name: "groups",
   data () {
     return {
       headers: [
-        {
-          text: '施設名',
-          align: 'start',
-          value: 'name',
-        },
-        { text: '定員数', value: 'capacity' },
-        { text: '目標入居者数', value: 'target_number_of_residents' },
-        { text: 'グループ', value: 'tenant_group[name]' },
-        { text: '編集・削除', value: 'actions', sortable: false },
+        { text: 'グループ名', align: 'start', value: 'name',},
+        { text: '編集・削除', value: 'actions', sortable: false }
       ],
       dialogLabel: {
-        name:'施設名',
-        capacity:'定員数',
-        target_number_of_residents:'目標入居者',
-        tenant_group:'グループ'
-
+        name:'グループ名',
       },
-      toolbarTitle: "施設一覧",
+      toolbarTitle: "グループ一覧",
       editDialogShow: false,
       deleteDialogShow: false,
       editedIndex: -1,
       editedItem: {
-        name: '',
-        capacity: 0,
-        target_number_of_residents: 0,
-        tenant_group_id: 0,
-        tenant_group: {
-          id: 0,
-          name: ''
-        }
+        name: ''
       },
       defaultItem: {
-        name: '',
-        capacity: 0,
-        target_number_of_residents: 0,
-        tenant_group_id: 0,
-        tenant_group: {
-          id: 0,
-          name: ''
-        }
+        name: ''
       },
-      omitKeys:['id','tenant_group', 'tenant_group_id'],
-      groupShow: true
+      omitKeys:['id'],
+      groupShow: false,
     }
   },
   computed: {
     items: {
-       get() {
-         return this.$store.getters['tenant/getTenants']
-       }
-    },
-    groups: {
        get() {
          return this.$store.getters['tenantGroup/getTenantGroups']
        }
     },
     errors: {
       get() {
-         return this.$store.getters['tenant/getErrors']
+         return this.$store.getters['tenantGroup/getErrors']
        }
     },
     formTitle () {
@@ -98,7 +66,6 @@ export default {
     },
   },
   created () {
-    this.$store.dispatch('tenant/tenants_road'),
     this.$store.dispatch('tenantGroup/tenantGroups_road'),
     this.clearError()
   },
@@ -118,10 +85,6 @@ export default {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.editDialogShow = true
-    },
-    selectGroup(group) {
-      this.editedItem["tenant_group"] = group
-      this.editedItem["tenant_group_id"] = group.id
     },
     deleteItem (item) {
       this.editedIndex = this.items.indexOf(item)
@@ -148,20 +111,20 @@ export default {
         for (let key of this.omitKeys){
           item[key] = this.editedItem[key]
         }
-        this.$store.dispatch('tenant/tenantUpdate',item)
+        this.$store.dispatch('tenantGroup/tenantGroupUpdate',item)
       } else {
         //新規作成
-        item["tenant_group_id"] = this.editedItem["tenant_group"]["id"]
-        this.$store.dispatch('tenant/tenantCreate',item)
+        item["tenant_group_id"] = this.editedItem["tenant_group_id"]
+        this.$store.dispatch('tenantGroup/tenantGroupCreate',item)
       }
       this.close()
     },
     deleteItemConfirm () {
-      this.$store.dispatch('tenant/tenantDelete',this.editedItem)
+      this.$store.dispatch('tenantGroup/tenantGroupDelete',this.editedItem)
       this.closeDelete()
     },
     clearError() {
-      this.$store.commit('tenant/setErrors', {})
+      this.$store.commit('tenantGroup/setErrors', {})
 　　},
   }
 }

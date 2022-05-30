@@ -37,8 +37,11 @@
              :form-title="formTitle"
              :edited-item="editedItem"
              :omitKeys="omitKeys"
+             :groups="groups"
+             :groupShow="groupShow"
              @close-click="close"
              @save-click="save"
+             @select-group="selectGroup"
             />
           </v-dialog>
           <v-dialog
@@ -115,7 +118,12 @@ export default {
       required: true,
     },
     errors: Object,
-    omitKeys: Array
+    omitKeys: Array,
+    groups: Array,
+    groupShow:{
+      type: Boolean,
+      required: true,
+    }
   },
   methods: {
     createItem () {
@@ -139,6 +147,9 @@ export default {
     save (item) {
       this.$emit("save-click", item)
     },
+    selectGroup(event) {
+      this.$emit("select-group", event)
+    }
   }
 }
 </script>

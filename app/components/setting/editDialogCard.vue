@@ -18,6 +18,20 @@
               >
               </v-text-field>
             </v-col>
+            <template v-if="groupShow">
+              <v-col
+                <v-select
+                v-model="editedItem.tenant_group"
+                :items="groups"
+                item-text="name"
+                item-value="id"
+                @change="selectGroup($event)"
+                label="グループ"
+                return-object
+                outlined
+                ></v-select>
+              </v-col>
+            </template>
         </v-row>
       </v-container>
     </v-card-text>
@@ -56,7 +70,12 @@ export default {
       type: Object,
       required: true,
     },
-    omitKeys: Array
+    omitKeys: Array,
+    groups: Array,
+    groupShow:{
+      type: Boolean,
+      required: true,
+    }
   },
   computed: {
     showItem() {
@@ -73,6 +92,9 @@ export default {
     },
     save(){
       this.$emit("save-click", this.showItem)
+    },
+    selectGroup(event) {
+      this.$emit("select-group", event)
     }
   }
 }

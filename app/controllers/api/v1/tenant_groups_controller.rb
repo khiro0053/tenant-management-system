@@ -1,10 +1,10 @@
 class Api::V1::TenantGroupsController < Api::V1::ApiController
   before_action :authenticate_user!, only: [:index, :show, :create, :update, :destroy]
-  before_action :set_tenant, only: [:show, :update, :destroy]
+  before_action :set_tenant_group, only: [:show, :update, :destroy]
 
   def index
-    groups = current_user.company.tenant_groups
-    render json: groups
+    tenant_groups = current_user.company.tenant_groups
+    render json: tenant_groups
   end
 
   def show
@@ -12,7 +12,7 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
   end
 
   def create
-    @tenant = current_user.company.tenants.new(tenant_params)
+    @tenant_group = current_user.company.tenant_groups.new(tenant_group_params)
     if @tenant_group.save
       render json: @tenant_group
     else
@@ -21,7 +21,7 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
   end
 
   def update
-    if @tenant.update(tenant_params)
+    if @tenant_group.update(tenant_group_params)
       render json: @tenant_group
     else
       render json: { errors: @tenant_group.errors.keys.map {|key| [key, @tenant.errors.full_messages_for(key)] }.to_h }, status: :unprocessable_entity
@@ -36,7 +36,7 @@ class Api::V1::TenantGroupsController < Api::V1::ApiController
   private
 
     def set_tenant_group
-      @tenant_group = current_user.company.tenants.tenant_groups.find(params[:id])
+      @tenant_group = current_user.company.tenant_groups.find(params[:id])
     end
 
     def tenant_group_params
