@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2021_12_16_144116) do
     t.bigint "tenant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_rooms_on_name", unique: true
     t.index ["tenant_id"], name: "index_rooms_on_tenant_id"
   end
 

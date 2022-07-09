@@ -11,7 +11,6 @@
 #
 # Indexes
 #
-#  index_rooms_on_name       (name) UNIQUE
 #  index_rooms_on_tenant_id  (tenant_id)
 #
 # Foreign Keys
