@@ -7,7 +7,7 @@
       <v-container>
         <v-row>
             <v-col
-              v-for="(value, key, index) in showItem" :key="index"
+              v-for="(value, key, index) in showItem" :key="`first-${index}`"
               cols="12"
               sm="6"
               md="4"
@@ -20,15 +20,16 @@
             </v-col>
             <template v-if="groupShow">
               <v-col
-                <v-select
-                v-model="editedItem.tenant_group"
-                :items="groups"
-                item-text="name"
-                item-value="id"
-                @change="selectGroup($event)"
-                label="グループ"
-                return-object
-                outlined
+                  <v-select
+                  v-for="(value, key, index) in relatedItemLabel" :key="`second-${index}`"
+                  v-model="editedItem[key]"
+                  :items="relatedItems"
+                  item-text="name"
+                  item-value="id"
+                  @change="selectRelatedItem($event)"
+                  :label="value"
+                  return-object
+                  outlined
                 ></v-select>
               </v-col>
             </template>
@@ -71,7 +72,8 @@ export default {
       required: true,
     },
     omitKeys: Array,
-    groups: Array,
+    relatedItems: Array,
+    relatedItemLabel: Object,
     groupShow:{
       type: Boolean,
       required: true,
@@ -93,8 +95,8 @@ export default {
     save(){
       this.$emit("save-click", this.showItem)
     },
-    selectGroup(event) {
-      this.$emit("select-group", event)
+    selectRelatedItem(event) {
+      this.$emit("select-related-item", event)
     }
   }
 }

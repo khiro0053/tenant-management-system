@@ -31,76 +31,72 @@
 
 <script>
 export default {
-  name: "tenants",
+  name: "rooms",
   data () {
     return {
       headers: [
         {
-          text: '施設名',
+          text: '居室名',
           align: 'start',
           value: 'name',
         },
-        { text: '定員数', value: 'capacity' },
-        { text: '目標入居者数', value: 'target_number_of_residents' },
-        { text: 'グループ', value: 'tenant_group[name]' },
+        { text: '定員数', value: 'seating_capacity' },
+        { text: '施設名', value: 'tenant[name]' },
         { text: '編集・削除', value: 'actions', sortable: false },
       ],
       dialogLabel: {
-        name:'施設名',
-        capacity:'定員数',
-        target_number_of_residents:'目標入居者',
-        tenant_group:'グループ'
-
+        name:'居室名',
+        seating_capacity:'定員',
+        tenant:'施設名'
       },
-      toolbarTitle: "施設一覧",
+      toolbarTitle: "居室一覧",
       editDialogShow: false,
       deleteDialogShow: false,
       editedIndex: -1,
       editedItem: {
         name: '',
-        capacity: 0,
-        target_number_of_residents: 0,
-        tenant_group_id: 0,
-        tenant_group: {
+        seating_capacity: 0,
+        tenant_id: 0,
+        tenant: {
           id: 0,
           name: ''
         }
       },
       defaultItem: {
         name: '',
-        capacity: 0,
-        target_number_of_residents: 0,
-        tenant_group_id: 0,
-        tenant_group: {
+        seating_capacity: 0,
+        tenant_id: 0,
+        tenant: {
           id: 0,
           name: ''
         }
       },
-      omitKeys:['id','tenant_group', 'tenant_group_id'],
-      relatedItemLabel:{tenant_group: 'グループ'},
-      searchInput:"",
+      omitKeys:['id','tenant', 'tenant_id'],
+      relatedItemLabel:{tenant:'施設'},
+      searchInput: "",
       groupShow: true
     }
   },
   computed: {
     items: {
        get() {
-         return this.$store.getters['tenant/getTenants']
+         return this.$store.getters['room/getRooms']
        }
     },
     relatedItems: {
        get() {
-         return this.$store.getters['tenantGroup/getTenantGroups']
+         return this.$store.getters['tenant/getTenants']
+
        }
     },
     dropDownItem: {
       get() {
-        return this.$store.getters['tenantGroup/getTenantGroupNames']
+        return this.$store.getters['tenant/getTenantNames']
       }
     },
     errors: {
       get() {
-         return this.$store.getters['tenant/getErrors']
+         return this.$store.getters['room/getErrors']
        }
     },
     formTitle () {
@@ -109,7 +105,7 @@ export default {
   },
   created () {
     this.$store.dispatch('tenant/tenants_road'),
-    this.$store.dispatch('tenantGroup/tenantGroups_road'),
+    this.$store.dispatch('room/rooms_road'),
     this.clearError()
   },
   watch: {
@@ -118,6 +114,9 @@ export default {
     },
     deleteDialogShow (val) {
       val || this.closeDelete()
+    },
+    searchInput: function(){
+      console.log(`変更がありました。${ this.searchInput }`)
     }
   },
   methods: {
@@ -130,8 +129,8 @@ export default {
       this.editDialogShow = true
     },
     selectRelatedItem(relatedItem) {
-      this.editedItem["tenant_group"] = relatedItem
-      this.editedItem["tenant_group_id"] = relatedItem.id
+      this.editedItem["tenant"] = relatedItem
+      this.editedItem["tenant_id"] = relatedItem.id
     },
     deleteItem (item) {
       this.editedIndex = this.items.indexOf(item)
@@ -158,20 +157,20 @@ export default {
         for (let key of this.omitKeys){
           item[key] = this.editedItem[key]
         }
-        this.$store.dispatch('tenant/tenantUpdate',item)
+        this.$store.dispatch('room/roomUpdate',item)
       } else {
         //新規作成
-        item["tenant_group_id"] = this.editedItem["tenant_group"]["id"]
-        this.$store.dispatch('tenant/tenantCreate',item)
+        item["room"] = this.editedItem["room"]["id"]
+        this.$store.dispatch('room/roomCreate',item)
       }
       this.close()
     },
     deleteItemConfirm () {
-      this.$store.dispatch('tenant/tenantDelete',this.editedItem)
+      this.$store.dispatch('room/roomDelete',this.editedItem)
       this.closeDelete()
     },
     clearError() {
-      this.$store.commit('tenant/setErrors', {})
+      this.$store.commit('room/setErrors', {})
 　　},
   }
 }
