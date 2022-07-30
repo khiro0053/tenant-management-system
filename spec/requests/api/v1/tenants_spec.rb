@@ -59,13 +59,12 @@ RSpec.describe "Api::V1::Tenants", type: :request do
   describe "PARCH/api/v1/tenants" do
     subject { patch(api_v1_tenant_path(tenant_id), params: params, headers: headers) }
 
-    let(:current_user) { create(:user) }
-    let(:tenant) { create(:tenant, company_id: current_user.company_id) }
-    let(:tenant_id) { tenant.id }
-    let(:headers) { current_user.create_new_auth_token }
-    let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, tenant_group_id: tenant.tenant_group_id) } }
-
     context "指定したidの施設が存在する場合" do
+      let(:current_user) { create(:user) }
+      let(:tenant) { create(:tenant, company_id: current_user.company_id) }
+      let(:tenant_id) { tenant.id }
+      let(:headers) { current_user.create_new_auth_token }
+      let(:params) { { tenant: attributes_for(:tenant, company_id: current_user.company_id, tenant_group_id: tenant.tenant_group_id) } }
       it "施設情報の更新ができる" do
         expect { subject }.to change { tenant.reload.name }.from(tenant.name).to(params[:tenant][:name])
         expect(response).to have_http_status(:ok)
