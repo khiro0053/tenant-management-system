@@ -19,7 +19,7 @@
      :dialog-label="dialogLabel"
      :edited-item="editedItem"
      :errors="errors"
-     :omitKeys="omitKeys"
+     :showKeys="showKeys"
      :relatedItems="relatedItems"
      :relatedItemLabel="relatedItemLabel"
      :dropDownItem="dropDownItem"
@@ -76,7 +76,7 @@ export default {
           name: ''
         }
       },
-      omitKeys:['id','tenant_group', 'tenant_group_id'],
+      showKeys:['name','capacity', 'target_number_of_residents'],
       relatedItemLabel:{tenant_group: 'グループ'},
       searchInput:"",
       groupShow: true
@@ -155,9 +155,6 @@ export default {
     save (item) {
       if (this.editedIndex > -1) {
         //更新
-        for (let key of this.omitKeys){
-          item[key] = this.editedItem[key]
-        }
         this.$store.dispatch('tenant/tenantUpdate',item)
       } else {
         //新規作成

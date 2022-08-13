@@ -44,7 +44,7 @@
              :dialog-label="dialogLabel"
              :form-title="formTitle"
              :edited-item="editedItem"
-             :omitKeys="omitKeys"
+             :showKeys="showKeys"
              :relatedItems="relatedItems"
              :relatedItemLabel="relatedItemLabel"
              :groupShow="groupShow"
@@ -127,7 +127,7 @@ export default {
       required: true,
     },
     errors: Object,
-    omitKeys: Array,
+    showKeys: Array,
     relatedItems: Array,
     relatedItemLabel: Object,
     searchInput: String,

@@ -7,21 +7,21 @@
       <v-container>
         <v-row>
             <v-col
-              v-for="(value, key, index) in showItem" :key="`first-${index}`"
+              v-for="showKey in showKeys" :key="showKey"
               cols="12"
               sm="6"
               md="4"
             >
               <v-text-field
-                v-model.trim="showItem[key]"
-                :label="dialogLabel[key]"
+                v-model.lazy="editedItem[showKey]"
+                :label="dialogLabel[showKey]"
               >
               </v-text-field>
             </v-col>
             <template v-if="groupShow">
               <v-col
                   <v-select
-                  v-for="(value, key, index) in relatedItemLabel" :key="`second-${index}`"
+                  v-for="(value, key, index) in relatedItemLabel" :key="`first-${index}`"
                   v-model="editedItem[key]"
                   :items="relatedItems"
                   item-text="name"
@@ -71,7 +71,7 @@ export default {
       type: Object,
       required: true,
     },
-    omitKeys: Array,
+    showKeys: Array,
     relatedItems: Array,
     relatedItemLabel: Object,
     groupShow:{
@@ -79,21 +79,12 @@ export default {
       required: true,
     }
   },
-  computed: {
-    showItem() {
-     let showItem = Object.assign({}, this.editedItem)
-     for (let omitKey of this.omitKeys){
-       delete showItem[omitKey]
-     }
-     return showItem
-    }
-  },
   methods: {
     close(){
       this.$emit("close-click")
     },
     save(){
-      this.$emit("save-click", this.showItem)
+      this.$emit("save-click", this.editedItem)
     },
     selectRelatedItem(event) {
       this.$emit("select-related-item", event)

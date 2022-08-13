@@ -17,7 +17,7 @@
      :dialog-label="dialogLabel"
      :edited-item="editedItem"
      :errors="errors"
-     :omitKeys="omitKeys"
+     :showKeys="showKeys"
      :groupShow="groupShow"
     />
   </logged-in-container>
@@ -46,7 +46,7 @@ export default {
       defaultItem: {
         name: ''
       },
-      omitKeys:['id'],
+      showKeys:['name'],
       groupShow: false,
     }
   },
@@ -108,9 +108,6 @@ export default {
     save (item) {
       if (this.editedIndex > -1) {
         //更新
-        for (let key of this.omitKeys){
-          item[key] = this.editedItem[key]
-        }
         this.$store.dispatch('tenantGroup/tenantGroupUpdate',item)
       } else {
         //新規作成

@@ -19,7 +19,7 @@
      :dialog-label="dialogLabel"
      :edited-item="editedItem"
      :errors="errors"
-     :omitKeys="omitKeys"
+     :showKeys="showKeys"
      :relatedItems="relatedItems"
      :relatedItemLabel="relatedItemLabel"
      :dropDownItem="dropDownItem"
@@ -71,7 +71,7 @@ export default {
           name: ''
         }
       },
-      omitKeys:['id','tenant', 'tenant_id'],
+      showKeys:['name', 'seating_capacity'],
       relatedItemLabel:{tenant:'施設'},
       searchInput: "",
       groupShow: true
@@ -154,13 +154,10 @@ export default {
     save (item) {
       if (this.editedIndex > -1) {
         //更新
-        for (let key of this.omitKeys){
-          item[key] = this.editedItem[key]
-        }
         this.$store.dispatch('room/roomUpdate',item)
       } else {
         //新規作成
-        item["room"] = this.editedItem["room"]["id"]
+        item["tenant_id"] = this.editedItem["tenant"]["id"]
         this.$store.dispatch('room/roomCreate',item)
       }
       this.close()
