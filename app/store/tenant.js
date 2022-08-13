@@ -15,6 +15,10 @@ export const getters = {
   getTenants: state => {
     return state.tenants
   },
+  getTenantNames: state => {
+    const TenantNames = state.tenants.map(obj => obj.name )
+    return TenantNames
+  },
   getTenants2: state => {
     return state.tenants2
   },

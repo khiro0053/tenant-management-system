@@ -2,12 +2,21 @@
   <v-data-table
     :headers="headers"
     :items="items"
+    :search="searchInput"
     class="elevation-1"
   >
     <template v-slot:top>
       <validation-error
         :errors="errors"
-       />
+      />
+      <v-combobox
+        :items="dropDownItem"
+        label="絞り込み条件"
+        dense
+        solo
+        outlined
+        :search-input.sync="_searchInput"
+      ></v-combobox>
       <v-toolbar
         flat
       >
@@ -17,7 +26,6 @@
           inset
           vertical
         ></v-divider>
-
         <v-spacer></v-spacer>
         <v-btn
           color="primary"
@@ -36,12 +44,13 @@
              :dialog-label="dialogLabel"
              :form-title="formTitle"
              :edited-item="editedItem"
-             :omitKeys="omitKeys"
-             :groups="groups"
+             :showKeys="showKeys"
+             :relatedItems="relatedItems"
+             :relatedItemLabel="relatedItemLabel"
              :groupShow="groupShow"
              @close-click="close"
              @save-click="save"
-             @select-group="selectGroup"
+             @select-related-item="selectRelatedItem"
             />
           </v-dialog>
           <v-dialog
@@ -118,11 +127,26 @@ export default {
       required: true,
     },
     errors: Object,
-    omitKeys: Array,
-    groups: Array,
+    showKeys: Array,
+    relatedItems: Array,
+    relatedItemLabel: Object,
+    searchInput: String,
+    dropDownItem: Array,
     groupShow:{
       type: Boolean,
       required: true,
+    }
+  },
+  computed:{
+    _searchInput: {
+      get() {
+        console.log('コンピューテッド '　+ this.searchInput )
+        return this.searchInput
+      },
+      set(newVal) {
+        console.log('どうですか　'+ newVal)
+        return this.$emit('update:searchInput', newVal)
+      }
     }
   },
   methods: {
@@ -147,8 +171,8 @@ export default {
     save (item) {
       this.$emit("save-click", item)
     },
-    selectGroup(event) {
-      this.$emit("select-group", event)
+    selectRelatedItem(event) {
+      this.$emit("select-related-item", event)
     }
   }
 }

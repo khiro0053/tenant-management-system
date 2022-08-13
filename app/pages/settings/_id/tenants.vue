@@ -4,6 +4,7 @@
      :headers="headers"
      :toolbarTitle="toolbarTitle"
      :items="items"
+     :searchInput.sync="searchInput"
      @create-click="createItem"
      @edit-click="editItem"
      @delete-click="deleteItem"
@@ -11,15 +12,17 @@
      @closeDelete-click="closeDelete"
      @save-click="save"
      @deleteItemConfirm="deleteItemConfirm"
-     @select-group="selectGroup"
+     @select-related-item="selectRelatedItem"
      :data-table-edit-dialog="editDialogShow"
      :data-table-delete-dialog="deleteDialogShow"
      :form-title="formTitle"
      :dialog-label="dialogLabel"
      :edited-item="editedItem"
      :errors="errors"
-     :omitKeys="omitKeys"
-     :groups="groups"
+     :showKeys="showKeys"
+     :relatedItems="relatedItems"
+     :relatedItemLabel="relatedItemLabel"
+     :dropDownItem="dropDownItem"
      :groupShow="groupShow"
     />
   </logged-in-container>
@@ -73,7 +76,9 @@ export default {
           name: ''
         }
       },
-      omitKeys:['id','tenant_group', 'tenant_group_id'],
+      showKeys:['name','capacity', 'target_number_of_residents'],
+      relatedItemLabel:{tenant_group: 'グループ'},
+      searchInput:"",
       groupShow: true
     }
   },
@@ -83,10 +88,15 @@ export default {
          return this.$store.getters['tenant/getTenants']
        }
     },
-    groups: {
+    relatedItems: {
        get() {
          return this.$store.getters['tenantGroup/getTenantGroups']
        }
+    },
+    dropDownItem: {
+      get() {
+        return this.$store.getters['tenantGroup/getTenantGroupNames']
+      }
     },
     errors: {
       get() {
@@ -119,9 +129,9 @@ export default {
       this.editedItem = Object.assign({}, item)
       this.editDialogShow = true
     },
-    selectGroup(group) {
-      this.editedItem["tenant_group"] = group
-      this.editedItem["tenant_group_id"] = group.id
+    selectRelatedItem(relatedItem) {
+      this.editedItem["tenant_group"] = relatedItem
+      this.editedItem["tenant_group_id"] = relatedItem.id
     },
     deleteItem (item) {
       this.editedIndex = this.items.indexOf(item)
@@ -145,9 +155,6 @@ export default {
     save (item) {
       if (this.editedIndex > -1) {
         //更新
-        for (let key of this.omitKeys){
-          item[key] = this.editedItem[key]
-        }
         this.$store.dispatch('tenant/tenantUpdate',item)
       } else {
         //新規作成

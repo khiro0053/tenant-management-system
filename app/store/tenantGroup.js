@@ -8,6 +8,10 @@ export const getters = {
   getTenantGroups: state => {
     return state.tenantGroups
   },
+  getTenantGroupNames: state => {
+    const TenantGroupNames = state.tenantGroups.map(obj => obj.name )
+    return TenantGroupNames
+  },
   getErrors: state => {
     return state.errors
   }

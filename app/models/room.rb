@@ -11,7 +11,6 @@
 #
 # Indexes
 #
-#  index_rooms_on_name       (name) UNIQUE
 #  index_rooms_on_tenant_id  (tenant_id)
 #
 # Foreign Keys
@@ -19,7 +18,7 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class Room < ApplicationRecord
-  validates :name, presence: true, uniqueness: true, length: { maximum: 20 }
+  validates :name, presence: true, length: { maximum: 20 }
   validates :seating_capacity, presence: true
   belongs_to :tenant
   has_many :room_assingments, dependent: :nullify
