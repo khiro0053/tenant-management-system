@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :tenants
       resources :tenant_groups
       resources :rooms
+      resources :residents
     end
   end
 end
