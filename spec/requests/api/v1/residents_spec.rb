@@ -15,7 +15,7 @@ RSpec.describe "Api::V1::Residents", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 2
-        expect(res[0].keys).to eq ["id", "care_level", "first_name","last_name", "is_hospitalized", "tenant"]
+        expect(res[0].keys).to eq ["id", "care_level", "full_name", "first_name", "last_name", "is_hospitalized","tenant"]
         expect(response).to have_http_status(:ok)
       end
     end
@@ -36,6 +36,7 @@ RSpec.describe "Api::V1::Residents", type: :request do
         res = JSON.parse(response.body)
         expect(res["id"]).to eq resident.id
         expect(res["care_level"]).to eq resident.care_level
+        expect(res["full_name"]).to eq resident.last_name + " " + resident.first_name
         expect(res["first_name"]).to eq resident.first_name
         expect(res["last_name"]).to eq resident.last_name
         expect(res["is_hospitalized"]).to eq resident.is_hospitalized
@@ -56,7 +57,7 @@ RSpec.describe "Api::V1::Residents", type: :request do
     it "current_userに紐付いたできる" do
       expect { subject }.to change { tenant.residents.count }.by(1)
       res = JSON.parse(response.body)
-      expect(res.keys).to eq ["id", "care_level", "first_name", "last_name", "is_hospitalized","tenant"]
+      expect(res.keys).to eq ["id", "care_level", "full_name", "first_name", "last_name", "is_hospitalized","tenant"]
       expect(response).to have_http_status(:ok)
     end
   end
