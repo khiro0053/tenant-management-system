@@ -41,7 +41,7 @@ export default {
         { name: 'settings-id-groups', icon: 'mdi-view-dashboard' },
         { name: 'settings-id-tenants', icon: 'mdi-view-compact' },
         { name: 'settings-id-rooms', icon: 'mdi-bed' },
-        { name: 'settings-id-settings', icon: 'mdi-cog' },
+        { name: 'settings-id-residents', icon: 'mdi-cog' },
         { name: 'settings-id-help', icon: 'mdi-help-circle' }
       ]
     }

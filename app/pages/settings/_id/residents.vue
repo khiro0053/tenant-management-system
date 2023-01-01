@@ -10,14 +10,11 @@
         <validation-error
           :errors="errors"
         />
-        <v-combobox
-          :items="dropDownItem"
-          label="絞り込み条件"
-          dense
-          solo
-          outlined
-          :search-input.sync="_searchInput"
-        ></v-combobox>
+        <item-combobox
+          :drop-down-item="dropDownItem"
+          :combobox-label="comboboxLabel"
+          :search-input.sync="searchInput"
+        />
         <v-toolbar
           flat
         >
@@ -60,29 +57,20 @@
                           >
                           </v-text-field>
                         </v-col>
-                        <item-select-form
+                        <item-array-select-form
                          :edited-item="editedItem"
-                         :select-items="careLevelList"
-                         :group-show="groupShow"
-                         :select-item-label="selectItemLabel"
+                         :select-items="careLevelFormData"
+                         :item-form-props="careLevelFormProps"
                          @select-item="selectItem"
                          @close="close"
                         />
-                        <template v-if="groupShow">
-                          <v-col
-                              <v-select
-                              v-for="(value, key, index) in relatedItemLabel" :key="`first-${index}`"
-                              v-model="editedItem[key]"
-                              :items="relatedItems"
-                              item-text="name"
-                              item-value="id"
-                              @change="selectItem($event, key)"
-                              :label="value"
-                              return-object
-                              outlined
-                            ></v-select>
-                          </v-col>
-                        </template>
+                        <item-object-select-form
+                         :edited-item="editedItem"
+                         :select-items="tenantFormData"
+                         :item-form-props="tenantFormProps"
+                         @select-item="selectItem"
+                         @close="close"
+                        />
                     </v-row>
                   </v-container>
                 </v-card-text>
@@ -149,9 +137,13 @@ export default {
           align: 'start',
           value: 'full_name',
         },
+        { text: '施設名', value: 'tenant[name]' },
+        { text: '契約開始日', value: 'date_of_contract' },
+        { text: '実入居日', value: 'date_of_occupancy' },
+        { text: '退去日', value: 'date_of_departure' },
+        { text: '契約終了日', value: 'date_of_expiry' },
         { text: '介護度', value: 'care_level' },
         { text: '入院状況', value: 'is_hospitalized' },
-        { text: '施設名', value: 'tenant[name]' },
         { text: '編集・削除', value: 'actions', sortable: false },
       ],
       dialogLabel: {
@@ -159,6 +151,10 @@ export default {
         first_name:'名',
         care_level:'介護度',
         is_hospitalized:'入院状況',
+        date_of_contract: '契約開始日',
+        date_of_occupancy: '実入居日',
+        date_of_departure: '退去日',
+        date_of_expiry: '契約終了日',
         tenant:'施設名'
       },
       toolbarTitle: "入居者一覧",
@@ -170,6 +166,10 @@ export default {
         first_name: '',
         care_level: '',
         is_hospitalized: false,
+        date_of_contract: '',
+        date_of_occupancy: '',
+        date_of_departure: '',
+        date_of_expiry: '',
         tenant: {
           id: 0,
           name: ''
@@ -180,19 +180,24 @@ export default {
         first_name: '',
         care_level: '',
         is_hospitalized: false,
+        date_of_contract: '',
+        date_of_occupancy: '',
+        date_of_departure: '',
+        date_of_expiry: '',
         tenant: {
           id: 0,
           name: ''
         }
       },
-      showKeys:['last_name','first_name', 'is_hospitalized' ],
-      relatedItemLabel:{tenant:'施設'},
-      selectItemLabel:{care_level:'介護度'},
-      selectItemProps: [
-        { ItemKey: 'tenant', label: '施設', itemText: 'name', itemValue: 'id'},
-        { ItemKey: 'care_level', label: '介護度', itemText: 'text', itemValue: 'text'}
+      showKeys:['last_name','first_name', 'is_hospitalized','date_of_contract', 'date_of_occupancy', 'date_of_departure', 'date_of_expiry' ],
+      tenantFormProps: [
+        { itemKey: 'tenant', label: '施設', itemText: 'name', itemValue: 'id'},
+      ],
+      careLevelFormProps: [
+        { itemKey: 'care_level', label: '介護度'}
       ],
       searchInput: "",
+      comboboxLabel: "絞り込み条件",
       groupShow: true
     }
   },
@@ -202,19 +207,9 @@ export default {
          return this.$store.getters['resident/getResidents']
        }
     },
-    relatedItems: {
-       get() {
-         return this.$store.getters['tenant/getTenants']
-       }
-    },
     dropDownItem: {
       get() {
         return this.$store.getters['tenant/getTenantNames']
-      }
-    },
-    careLevelList: {
-      get() {
-        return this.$store.getters['resident/getCareLevelList']
       }
     },
     errors: {
@@ -223,14 +218,13 @@ export default {
        }
     },
     ...mapGetters({
-      tenantFormData: 'tenant/getTenants'
+      tenantFormData: 'tenant/getTenants',
+      careLevelFormData: 'resident/getCareLevelList'
+
     }),
     formTitle () {
       return this.editedIndex === -1 ? '新規作成' : '編集'
     },
-  },
-  mounted() {
-    console.log(this.tenantFormData)
   },
   created () {
     this.$store.dispatch('tenant/tenants_road'),
@@ -258,11 +252,15 @@ export default {
       this.editDialogShow = true
     },
     selectItem(selectItem, key) {
+      console.log(selectItem)
+      console.log(key)
+      console.log(this.editedItem)
       this.editedItem[key] = selectItem
       //外部キーがある場合は以下の処理も行う
       if (selectItem.constructor　=== Object && 'id' in selectItem  ){
         this.editedItem[key + '_id'] = selectItem.id
       }
+      console.log(this.editedItem)
     },
     deleteItem (item) {
       this.editedIndex = this.items.indexOf(item)
@@ -283,14 +281,14 @@ export default {
         this.editedIndex = -1
       })
     },
-    save (item) {
+    save () {
       if (this.editedIndex > -1) {
         //更新
-        this.$store.dispatch('resident/residentUpdate',item)
+        this.$store.dispatch('resident/residentUpdate',this.editedItem)
       } else {
         //新規作成
-        item["tenant_id"] = this.editedItem["tenant"]["id"]
-        this.$store.dispatch('resident/residentCreate',item)
+        this.editedItem["tenant_id"] = this.editedItem["tenant"]["id"]
+        this.$store.dispatch('resident/residentCreate',this.editedItem)
       }
       this.close()
     },
